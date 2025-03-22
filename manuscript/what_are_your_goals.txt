@@ -1,0 +1,82 @@
+# What are your time series goals?
+
+Now that you've encountered two ways of modeling univariate time series -- ARIMA and STL -- I'd like you to think about your goals. What are you trying to do? What's the point?
+
+* Point Forecasting: Predicting a single specific future value (e.g., the exact price of beef flank steak in July).
+* Directional Forecasting: Determining the expected direction of change (upward or downward) rather than a precise value.
+
+* Interval/Probabilistic Forecasting: Generating forecasts with confidence intervals or probability distributions that capture uncertainty.
+
+* Scenario Analysis: Outlining multiple future scenarios along with their probabilities, useful for risk management and strategic planning.
+
+* Trend Extraction: Isolating the long-term movement or underlying trend of the series to understand overall growth or decline.
+
+* Seasonal Analysis: Identifying and quantifying recurring seasonal patterns to better explain periodic fluctuations.
+
+* Cyclical Behavior Analysis: Detecting broader economic or business cycles that influence the series over longer time spans.
+
+* Anomaly Detection: Recognizing unusual spikes, drops, or outliers that could signal extraordinary events or data issues.
+
+* Volatility Forecasting: Estimating future variability or risk, which is particularly important in financial applications.
+
+* Impact or Intervention Analysis: Assessing the effect of a specific event or policy change on the time series.
+
+* Model Diagnostics and Error Analysis: Evaluating forecast accuracy and residual behavior to refine models and build confidence in predictions.
+
+The goal you have may be guided by business considerations. For instance, in one application I was involved with, we had initially assumed that increasing accuracy of our point-in-time prediction was most important. After all, users said accuracy was paramount. However, when we delivered a model with improved accuracy, the complaint came in that it changed too much in response to new data. The users wanted accuracy within a constraint that pricing change as little as possible during the course of responding to an RFP.
+
+The goal you have will also guide which metrics you use to assess the effectiveness of your model. For instance, for a point-in-time forecast, appropriate metrics might include
+
+* **Root Mean Squared Error (RMSE):**  
+  * *Pros:*  
+    - Has the same units as the original data, making it interpretable.  
+    - Penalizes larger errors more than smaller ones, which can be useful if large errors are particularly undesirable.  
+  * *Cons:*  
+    - Sensitive to outliers due to the squaring of errors.
+
+* **Mean Absolute Error (MAE):**  
+  * *Pros:*  
+    - Also expressed in the same units as the data.  
+    - More robust to outliers compared to RMSE, since it doesn’t square the errors.  
+    - Easy to understand and compute.  
+  * *Cons:*  
+    - Doesn’t penalize large errors as much as RMSE, which might be a drawback if large errors are critical.
+
+* **Mean Squared Error (MSE):**  
+  * *Pros:*  
+    - Provides a clear mathematical formulation and is often used in optimization contexts.  
+    - Penalizes larger errors more than smaller ones, similar to RMSE.  
+  * *Cons:*  
+    - Reported in squared units, which can make interpretation less intuitive compared to RMSE or MAE.
+
+* **Mean Absolute Percentage Error (MAPE):**  
+  * *Pros:*  
+    - Expresses errors as a percentage, making it easier to compare performance across different scales or series.  
+    - Intuitive interpretation in relative terms.  
+  * *Cons:*  
+    - Can be problematic or undefined when actual values are zero or close to zero.  
+    - May be biased if the time series has extreme values or if errors are asymmetrically distributed.
+
+* **Symmetric Mean Absolute Percentage Error (sMAPE):**  
+  * *Pros:*  
+    - Attempts to overcome some of MAPE’s limitations by symmetrizing the percentage error calculation.  
+    - Offers a bounded error measure (typically between 0% and 200%), which can facilitate comparisons.  
+  * *Cons:*  
+    - Can be unstable when actual and forecasted values are both very low.  
+    - Its interpretation can be less straightforward compared to simpler metrics like MAE.
+
+* **Mean Absolute Scaled Error (MASE):**  
+  * *Pros:*  
+    - Scales the error relative to a naive benchmark (such as a seasonal naive forecast), making it useful for comparing across series of different scales.  
+    - Avoids issues with percentage errors when the data includes zero or near-zero values.  
+  * *Cons:*  
+    - Requires the definition of a reasonable benchmark model, and its performance depends on the chosen benchmark.
+
+* **Bias (Mean Error):**  
+  * *Pros:*  
+    - Provides an indication of systematic over- or under-forecasting by averaging the forecast errors.  
+  * *Cons:*  
+    - Positive and negative errors can cancel each other out, potentially masking the true magnitude of forecasting errors.  
+
+Each of these metrics offers different insights into forecast performance, so the choice depends on the specific aspects of accuracy or error characteristics that are most relevant to your analysis.
+
