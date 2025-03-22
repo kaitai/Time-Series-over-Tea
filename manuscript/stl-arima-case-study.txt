@@ -1,0 +1,22 @@
+Alright. Time for a case study comparing ARIMA and STL. The three themes I personally have are food, fuel, and macro, so let's start with a macro theme as suggested by ChatGPT o3-mini-high: US monthly retail sales.
+
+Now, if you go to FRED and look for monthly retail sales, you'll be amused by the sheer variety of time series that represent various aspects of retail sales. I will pick one. It looks nicely seasonal: [here's one](https://fred.stlouisfed.org/series/MRTSSM44000USN)
+
+For those following along at home, download the csv or use the FRED API to grab the data. I'll do some analysis, providing plots along the way.
+
+1. Acquire the data and import it into Python or R or whatever you're using. 
+
+2. Exploratory data analysis: 
+  * Plot it for visual inspection. Do we have seasonality? Do we have trend? Outliers?
+  * I do like seasonplots -- they're a wonderful method for looking at data on a yearly basis.
+  * Let's look at the autocorrelation plot to help us prepare for ARIMA analysis.
+
+  You know what, the original workflow proposed by ChatGPT does not include setting up a train-test split or anything like that. I don't like that. We can do this from the beginning. I will go back and amend that chapter.
+
+  You know what else it doesn't have? Defining the goal. I should define a goal. For didactic purposes, I'll define two goals. First goal: do a point-in-time forecast of monthly retail sales for April 2025. I choose this month as it's not too far ahead and we'll be able to assess outcomes during the class that I'm teaching right now. Second goal: how much does March 2025 diverge from the forecast I would have made as of December 2025? This may help me assess the change in sentiment we are seeing, comparing the post-election pre-inauguration trajectory to the trajectory two months in.
+  These goals mean that I need point-in-time forecasts. When thinking about the tradeoff between accuracy and precision, I am most interested in accuracy at this time. 
+  
+3A. Use ARIMA to fit a model
+3B. Use STL to fit a model
+
+  
