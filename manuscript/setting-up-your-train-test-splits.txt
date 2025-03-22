@@ -66,3 +66,5 @@ Time series models require careful handling of temporal ordering. Unlike typical
 ## Conclusion
 
 For a master's student in financial mathematics, setting up a proper training, validation, and testing regimen for time series models is essential. While standard machine learning models often rely on random splits or k-fold cross-validation, time series analysis demands a sequential, time-ordered approach—using methods like the holdout approach, rolling/walk-forward validation, and backtesting—to realistically simulate how the model will perform in real-world forecasting scenarios.
+
+Authorship: o3-mini-high all the way
