@@ -1,17 +1,5 @@
-# This is the default new book content for writing a Leanpub book in plain text!
+# Trying something new: course notes using LeanPub
 
-This repository contains some default content that can be added to a new Leanpub book so you can make your first book preview.
+This repository is copied directly from Leanpub's book template. 
 
-Just click "Use this template" on GitHub to create a new repo of your own, with everything set up just like it is here.
-
-At the top level of the repo will be a "manuscript" folder.
-
-In the "manuscript" folder, you will see a file called "Book.txt". The files listed in the "Book.txt" file are the ones that will be used to generate your book.
-
-In this default content repo, the two files listed in "Book.txt" are the "chapter1.txt" and "chapter2.txt" files currently in the "manuscript" folder.
-
-Also in the "manuscript" folder, you will see a "resources" folder. Images and other resources are to be placed in this folder.
-
-If you're looking for a tutorial, please select the Getting Started walkthrough for your chosen book writing mode [here](http://help.leanpub.com/en/articles/3088382-quick-walkthroughs-for-getting-started-on-a-leanpub-book) in our [Help Center](http://help.leanpub.com/en), which has hundreds of useful articles for Leanpub authors.
-
-Good luck with all your writing!
+I am trying something new: writing an AI-assisted book. Disclaimer: genAI has significant downfalls (training on stolen materials, hallucinations, wasting electricity on stupid crap, water use pressures, and more). It also presents many opportunities for creation and innovation. With full understanding of the moral complexity of my existence in this world, I'm trying out writing a book of notes using AI. I hope you find it instructive. 
