@@ -1,0 +1,68 @@
+
+
+# Best Practices for Splitting Time Series Data
+
+Time series models require careful handling of temporal ordering. Unlike typical machine learning applications where data points are independent and random splits (or k-fold cross-validation) are acceptable, time series data must maintain its sequential order to avoid future information leaking into the past.
+
+## Non-Time-Series Models
+
+* **Random Splits:**  
+  * Data is randomly shuffled into training, validation, and testing sets.
+  * Assumes data points are independent and identically distributed (i.i.d.).
+  * Works well when temporal order isn’t meaningful.
+
+* **K-Fold Cross-Validation:**  
+  * Randomly partitions data into k folds and rotates the training and testing roles.
+  * Provides robust performance estimates when observations are independent.
+
+## Time Series Models
+
+* **Temporal Order Preservation:**  
+  * Always maintain the chronological order.
+  * Training data should consist of earlier time points, while validation and testing data should be later.
+
+### Methods for Time Series Data Splitting
+
+* **Holdout Method (Train-Validation-Test Split):**  
+  * **Training Set:** Earliest portion of the series; used for model training.
+  * **Validation Set:** The next segment; used for tuning hyperparameters and model selection.
+  * **Test Set:** The most recent data; used for final evaluation.
+  * **Example:**  
+    * If your data spans from 2000 to 2020, you might choose:
+      * Training: 2000–2015
+      * Validation: 2016–2018
+      * Test: 2019–2020
+
+* **Rolling/Walk-Forward Validation:**  
+  * **Concept:** Mimics real-world forecasting by updating the training set as time progresses.
+  * **Rolling Window:**  
+    * Uses a fixed-size window that moves forward.
+    * For each step, the model is trained on a block of past data and validated on the immediately subsequent block.
+  * **Expanding Window:**  
+    * Starts with an initial period and then grows by incorporating new data points as they become available.
+    * Captures the effect of increasing training data over time.
+  * **Benefits:**  
+    * Provides multiple evaluation metrics over different periods.
+    * More accurately simulates future forecasting scenarios.
+  * **Implementation Tip:**  
+    * Python’s `scikit-learn` offers a `TimeSeriesSplit` class that can automate rolling or walk-forward validation.
+
+* **Backtesting:**  
+  * **Definition:** A series of historical forecast simulations where the model is retrained at successive time points.
+  * **Purpose:** Ensures that performance evaluations mimic the real-time forecasting process.
+  * **Application:** Particularly crucial in financial contexts where structural breaks or regime shifts might affect performance.
+
+### Considerations Specific to Time Series
+
+* **Seasonality and Trends:**  
+  * Ensure that each split (training, validation, test) captures the full seasonal cycles and underlying trends.
+* **Structural Breaks:**  
+  * If your series contains known shifts or breaks, adjust splits to account for these to avoid misleading performance estimates.
+* **Frequency and Granularity:**  
+  * The size of the splits should reflect the data’s frequency (daily, monthly, quarterly) and the nature of the forecasting problem.
+
+---
+
+## Conclusion
+
+For a master's student in financial mathematics, setting up a proper training, validation, and testing regimen for time series models is essential. While standard machine learning models often rely on random splits or k-fold cross-validation, time series analysis demands a sequential, time-ordered approach—using methods like the holdout approach, rolling/walk-forward validation, and backtesting—to realistically simulate how the model will perform in real-world forecasting scenarios.
