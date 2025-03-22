@@ -80,3 +80,4 @@ The goal you have will also guide which metrics you use to assess the effectiven
 
 Each of these metrics offers different insights into forecast performance, so the choice depends on the specific aspects of accuracy or error characteristics that are most relevant to your analysis.
 
+authorship: Kaisa + o3-mini-high
