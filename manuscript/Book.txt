@@ -1,3 +1,2 @@
 STL-decomposition.txt
 what-are-your-goals.txt
-chapter2-writing-in-markua.txt
