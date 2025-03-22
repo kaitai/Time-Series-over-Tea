@@ -90,3 +90,4 @@ Below is a suggested workflow for a master's student in financial mathematics im
 Final Thoughts
 This workflow bridges both theory and practice: it starts with robust data handling and EDA, proceeds through methodical decomposition with STL (emphasizing the importance of parameter selection), and ends with diagnostic checks and the potential for integrated forecasting. Using a real-world dataset like U.S. monthly retail sales not only reinforces the learning process but also provides a practical application that highlights seasonal behaviors crucial in economic analyses.
 
+Authorship: an iterative process with o3-mini-high and my rearrangements & editing
