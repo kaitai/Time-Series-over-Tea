@@ -1,0 +1,120 @@
+# Time Series Cross-Validation: Best Practices
+
+## Time Series vs. Traditional ML Cross-Validation
+
+For non-time series data, random sampling for train-test splits is effective because observations are typically independent. However, for time series data, this approach is fundamentally flawed due to:
+
+1. **Temporal dependence**: Observations are correlated over time
+2. **Information leakage**: Future information shouldn't influence predictions of past events
+3. **Non-stationarity**: Data distributions may evolve over time
+
+## Time Series Cross-Validation Methods
+
+### 1. Forward Chaining (Rolling Window Approach)
+
+This is the most common approach for financial time series:
+
+```
+Training                  Validation    Test
+[------------------]     [--------]    [----]
+      Window 1
+
+     [------------------]     [--------]    [----]
+           Window 2
+     
+          [------------------]     [--------]    [----]
+                Window 3
+```
+
+**Implementation**:
+- Start with an initial training period
+- Define validation and test windows of fixed size
+- Iteratively move forward in time, re-training models at each step
+- Average performance metrics across all iterations
+
+**Key parameters**:
+- Initial training size (typically 60-70% of data)
+- Window size/step size (often 1 month, 1 quarter, etc.)
+- Validation window size (large enough to capture seasonality)
+
+### 2. Expanding Window Approach
+
+Similar to forward chaining but the training set expands rather than rolls:
+
+```
+Training              Validation    Test
+[----------]         [--------]    [----]
+      Window 1
+
+[----------------]   [--------]    [----]
+      Window 2
+     
+[------------------------] [--------]    [----]
+            Window 3
+```
+
+**Advantages**:
+- Uses more historical data as you progress
+- Better for longer-term forecasts where all historical patterns matter
+
+**Disadvantages**:
+- May give too much weight to distant past in non-stationary series
+- Increasing computational cost with each iteration
+
+### 3. Nested Cross-Validation
+
+For hyperparameter tuning, use nested cross-validation:
+- Outer loop: Evaluates model performance (test set)
+- Inner loop: Tunes hyperparameters (validation set)
+
+Each loop uses time-based splits rather than random splits.
+
+## Financial Time Series Considerations
+
+### 1. Regime Changes and Market Cycles
+
+- Include both bull and bear markets in training data
+- Consider oversampling crisis periods
+- Test model performance across different market regimes
+
+### 2. Look-Ahead Bias Prevention
+
+- Ensure features are available at prediction time
+- Be careful with lagged variables and rolling statistics
+- Avoid using future information implicitly (e.g., standardizing using full dataset statistics)
+
+### 3. Backtesting Specific Considerations
+
+- Account for transaction costs and market impact
+- Incorporate realistic execution delays
+- Test for robustness against market movements between signal generation and execution
+
+### 4. Evaluation Metrics
+
+- Financial-specific metrics: risk-adjusted returns (Sharpe, Sortino), maximum drawdown
+- Traditional forecasting metrics: RMSE, MAE, MAPE
+- Directional accuracy (especially important for trading)
+
+## Comparison with Traditional ML Cross-Validation
+
+| Aspect | Traditional ML | Time Series ML |
+|--------|----------------|----------------|
+| Split method | Random | Temporal |
+| Data independence | Assumed | Not assumed |
+| Validation strategy | K-fold | Forward chaining |
+| Feature engineering | Point-in-time | Requires careful lag structure |
+| Distribution | Typically static | Often evolving |
+| Performance stability | Usually consistent across folds | May vary significantly across time periods |
+
+## Implementation Best Practices
+
+1. **Stationary transformations**: Apply appropriate transformations before modeling (differencing, log transforms)
+2. **Feature scaling**: Scale features using only training data statistics
+3. **Hyperparameter tuning**: Use nested time series cross-validation
+4. **Ensemble approach**: Consider ensembles of models trained on different time windows
+5. **Out-of-sample testing**: Reserve the most recent data as a final test set, never used in training or validation
+6. **Walk-forward optimization**: Retrain models as new data becomes available
+
+This structured approach ensures your time series models are both theoretically sound and practically robust for financial applications, avoiding the pitfalls of data leakage that plague many financial modeling attempts.
+
+Authorship: Claude 3.7 Sonnet. I like that it included ASCII visuals. I also find it has a much more sophisticated comparison of ML best practice and time series best practices.
