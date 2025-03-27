@@ -6,50 +6,50 @@ STL is a versatile and robust procedure for decomposing time series into seasona
 
 For a time series $Y_t$, STL decomposes it as:
 
-$Y_t = T_t + S_t + R_t$
+`Y_t = T_t + S_t + R_t`$
 
 Where:
-- $T_t$ is the trend component
-- $S_t$ is the seasonal component
-- $R_t$ is the remainder (or residual) component
+- `T_t`$ is the trend component
+- `S_t`$ is the seasonal component
+- `R_t`$ is the remainder (or residual) component
 
 ## LOESS (Locally Estimated Scatterplot Smoothing)
 
-The foundation of STL is LOESS regression, which is a non-parametric method that fits multiple regression models locally to subsets of the data. For a set of points $(x_i, y_i)$, LOESS:
+The foundation of STL is LOESS regression, which is a non-parametric method that fits multiple regression models locally to subsets of the data. For a set of points `(x_i, y_i)`$, LOESS:
 
-1. For each point $x$, selects $q$ nearest neighbors (where $q = \lambda n$ is the span, typically 0.25 to 0.5)
-2. Assigns weights using a tri-cubic function: $w_i = (1 - |\frac{x_i - x}{d_x}|^3)^3$ where $d_x$ is the distance to the furthest neighbor
+1. For each point `x`$, selects `q`$ nearest neighbors (where `q = \lambda n`$ is the span, typically 0.25 to 0.5)
+2. Assigns weights using a tri-cubic function: `w_i = (1 - |\frac{x_i - x}{d_x}|^3)^3`$ where `d_x`$ is the distance to the furthest neighbor
 3. Fits a weighted polynomial regression (usually degree 1 or 2)
-4. Uses the fitted value at $x$ as the smoothed value
+4. Uses the fitted value at `x`$ as the smoothed value
 
 ## STL Algorithm
 
 STL operates through nested loops:
 
 ### Inner Loop
-1. **Detrending**: Compute $Y_t - T_t$ (initially $T_t$ may be set to 0)
+1. **Detrending**: Compute `Y_t - T_t`$ (initially `T_t`$ may be set to 0)
 2. **Cycle-Subseries Smoothing**: For each position in the seasonal cycle, apply LOESS to the values at that position across different cycles
 3. **Low-Pass Filtering**: Apply a moving average followed by LOESS to the cycle-subseries results
 4. **Detrending the Seasonal Component**: Subtract the low-pass filter result from cycle-subseries smoothing
-5. **Deseasonalizing**: Calculate $Y_t - S_t$
-6. **Trend Smoothing**: Apply LOESS to the deseasonalized data to estimate $T_t$
+5. **Deseasonalizing**: Calculate `Y_t - S_t`$
+6. **Trend Smoothing**: Apply LOESS to the deseasonalized data to estimate `T_t`$
 
 ### Outer Loop
 Introduces robustness by computing weights based on the residuals:
-- $\rho_t = |R_t|$
-- $w_t = B({\rho_t}/h)$ where $B$ is the bisquare function: $B(u) = (1-u^2)^2$ for $0 \leq u < 1$ and 0 otherwise
-- $h$ is typically set to 6 × median$|\rho_t|$
+- `\rho_t = |R_t|`$
+- `w_t = B({\rho_t}/h)`$ where `B`$ is the bisquare function: `B(u) = (1-u^2)^2`$ for `0 \leq u < 1`$ and 0 otherwise
+- `h`$ is typically set to 6 × median`|\rho_t|`$
 
 These weights are then used in subsequent inner loop iterations, giving less influence to observations with large residuals.
 
 ## Key Parameters
 
-- $n_p$ = Period of seasonal component
-- $n_i$ = Number of inner loop iterations (typically 1 or 2)
-- $n_o$ = Number of outer loop iterations (typically 0 to 10)
-- $\lambda_s$ = Seasonal smoothing parameter (span for seasonal LOESS)
-- $\lambda_t$ = Trend smoothing parameter (span for trend LOESS)
-- $\lambda_l$ = Low-pass filter smoothing parameter
+- `n_p`$ = Period of seasonal component
+- `n_i`$ = Number of inner loop iterations (typically 1 or 2)
+- `n_o`$ = Number of outer loop iterations (typically 0 to 10)
+- `\lambda_s`$ = Seasonal smoothing parameter (span for seasonal LOESS)
+- `\lambda_t`$ = Trend smoothing parameter (span for trend LOESS)
+- `\lambda_l`$ = Low-pass filter smoothing parameter
 
 ## Properties and Advantages
 
@@ -69,3 +69,6 @@ For financial applications, STL is valuable because:
 In your subsequent forecasting applications, you can model and forecast each component separately, then recombine them—a strategy that often yields better results than direct forecasting of the original series.
 
 Authorship: this is straight from Claude 3.7 Sonnet. I'm rather impressed -- output was automatically in Markdown, it included discussion of the low-pass filter, and it provided more mathematical detail. Thoughts?
+Turns out the variety of Markdown supported by Leanpub is Markua and math formulas need backticks rather than dollar signs alone. However, still pretty good.
+
+Suggested tea: Try this over a crisp pouchong/baozhong oolong. A versatile tea, flavorful, and you can resteep the leaves for many cups & get a good result!
