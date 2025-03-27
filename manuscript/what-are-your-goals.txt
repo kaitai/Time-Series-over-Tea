@@ -23,7 +23,7 @@ Now that you've encountered two ways of modeling univariate time series -- ARIMA
 
 * Model Diagnostics and Error Analysis: Evaluating forecast accuracy and residual behavior to refine models and build confidence in predictions.
 
-The goal you have may be guided by business considerations. For instance, in one application I was involved with, we had initially assumed that increasing accuracy of our point-in-time prediction was most important. After all, users said accuracy was paramount. However, when we delivered a model with improved accuracy, the complaint came in that it changed too much in response to new data. The users wanted accuracy within a constraint that pricing change as little as possible during the course of responding to an RFP.
+The goal you have may be guided by business considerations. For instance, in one application I was involved with, we had initially assumed that increasing accuracy of our point-in-time prediction was most important. After all, users said accuracy was paramount. However, when we delivered a model with improved accuracy, the complaint came in that it changed too much in response to new data. The users wanted accuracy within a constraint that pricing change as little as possible during the course of responding to a request for pricing.
 
 The goal you have will also guide which metrics you use to assess the effectiveness of your model. For instance, for a point-in-time forecast, appropriate metrics might include
 
@@ -80,4 +80,8 @@ The goal you have will also guide which metrics you use to assess the effectiven
 
 Each of these metrics offers different insights into forecast performance, so the choice depends on the specific aspects of accuracy or error characteristics that are most relevant to your analysis.
 
-authorship: Kaisa + o3-mini-high
+I'll add that you can compute these metrics for the training set and the testing set, and the difference can be informative. Folks in class and other discussions have asked about black swans, regime shifts, and so on; that's why humans will retain employment in these fields for some time. While AI is improving and may be able to provide probabilities of regime shift and suggest black swans to consider (rendering them mottled-grey swans?) humans will still want other humans around to be imaginative and to blame and fire if needed.
+
+authorship: Kaisa + o3-mini-high. I'm sure you can tell who wrote what.
+
+Suggested tea: mate is not a true tea, as it's not from the Camellia Sinensis plant, but it's a delicious caffeinated beverage made from leaves of a plant from South America. It is reputed to sharpen thinking and is a fine morning brew!
