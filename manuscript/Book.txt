@@ -3,3 +3,7 @@ STL-decomposition-o3-mini-high.txt
 what-are-your-goals.txt
 setting-up-your-train-test-splits-claude.txt
 setting-up-your-train-test-splits-o3.txt
+cointegration-o3-mini-high.txt
+pairs-trading-o3-mini-high.txt
+cointegration-claude.txt
+pairs-trading-claude.txt
