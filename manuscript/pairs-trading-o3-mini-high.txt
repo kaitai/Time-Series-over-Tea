@@ -18,10 +18,10 @@ A cointegration-based pairs trading strategy capitalizes on the idea that while 
 
 - **Engle-Granger Two-Step Method:**  
   1. **Regression Step:**  
-     Regress the price series of one asset on the other. Suppose \( y_t \) and \( x_t \) are the two asset prices, then estimate:
-     \[
-     y_t = \beta x_t + \epsilon_t.
-     \]
+     Regress the price series of one asset on the other. Suppose `y_t`$ and `x_t`$ are the two asset prices, then estimate:
+     
+     `y_t = \beta x_t + \epsilon_t.`$
+     
      Here, \( \beta \) is the cointegrating coefficient and \( \epsilon_t \) represents the residuals (or the spread).
   
   2. **Stationarity Test:**  
