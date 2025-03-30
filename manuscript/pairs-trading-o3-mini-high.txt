@@ -22,10 +22,10 @@ A cointegration-based pairs trading strategy capitalizes on the idea that while 
      
      `y_t = \beta x_t + \epsilon_t.`$
      
-     Here, \( \beta \) is the cointegrating coefficient and \( \epsilon_t \) represents the residuals (or the spread).
+     Here, ` \beta `$ is the cointegrating coefficient and ` \epsilon_t `$ represents the residuals (or the spread).
   
   2. **Stationarity Test:**  
-     Apply a unit root test (e.g., the Augmented Dickey-Fuller (ADF) test) on the residual series \( \epsilon_t \). If \( \epsilon_t \) is stationary (i.e., \( I(0) \)), the pair is cointegrated.
+     Apply a unit root test (e.g., the Augmented Dickey-Fuller (ADF) test) on the residual series ` \epsilon_t `$. If ` \epsilon_t `$ is stationary (i.e., ` I(0) `$), the pair is cointegrated.
 
 - **Alternative Methods:**  
   For more than two assets or to improve robustness, use the Johansen test, which can simultaneously test for multiple cointegrating relationships.
@@ -35,17 +35,17 @@ A cointegration-based pairs trading strategy capitalizes on the idea that while 
 ### 3. Constructing the Trading Signal
 
 - **Defining the Spread:**  
-  The stationary residual series \( \epsilon_t \) (i.e., the spread) represents deviations from the long-run equilibrium:
+  The stationary residual series ` \epsilon_t `$ (i.e., the spread) represents deviations from the long-run equilibrium:
   \[
   \text{Spread } z_t = y_t - \beta x_t.
   \]
-  Compute the mean and standard deviation of \( z_t \) over a historical window.
+  Compute the mean and standard deviation of ` z_t `$ over a historical window.
 
 - **Signal Generation:**  
   - **Entry Signal:**  
     When the spread deviates significantly from its mean (e.g., more than 2 standard deviations), it suggests that the spread is likely to revert. For example:
-    - If \( z_t \) is **above** the mean \( +2\sigma \), you might short \( y_t \) and go long \( x_t \).
-    - If \( z_t \) is **below** the mean \( -2\sigma \), you might go long \( y_t \) and short \( x_t \).
+    - If ` z_t `$ is **above** the mean ` +2\sigma `$, you might short ` y_t `$ and go long ` x_t `$.
+    - If ` z_t `$ is **below** the mean ` -2\sigma `$, you might go long ` y_t `$ and short ` x_t `$.
   - **Exit Signal:**  
     Close the position when the spread reverts back to the mean or a predefined threshold, capturing the profit from the reversion.
 
@@ -54,7 +54,7 @@ A cointegration-based pairs trading strategy capitalizes on the idea that while 
 ### 4. Position Sizing and Risk Management
 
 - **Hedge Ratio:**  
-  The estimated cointegrating coefficient \( \beta \) provides the hedge ratio, ensuring that your long and short positions are appropriately balanced according to their long-run relationship.
+  The estimated cointegrating coefficient ` \beta `$ provides the hedge ratio, ensuring that your long and short positions are appropriately balanced according to their long-run relationship.
 
 - **Risk Controls:**  
   Implement stop-loss orders and position limits to manage adverse moves. Regularly review the cointegration relationship, as structural changes in the market can lead to breakdowns in the historical equilibrium.

@@ -4,21 +4,21 @@ Below is an overview of the mathematical foundations of cointegration, tailored 
 
 ## 1. Integration and Unit Roots
 
-A time series ` \{x_t\}_{t\in\mathbb{Z}} `$ is said to be *integrated of order* ` d `$, denoted ` I(d) `$, if it becomes stationary after differencing ` d `$ times. In practice, many economic and financial time series are nonstationary in levels but become stationary after first differencing. That is, if
+A time series \( \{x_t\}_{t\in\mathbb{Z}} \) is said to be *integrated of order* \( d \), denoted \( I(d) \), if it becomes stationary after differencing \( d \) times. In practice, many economic and financial time series are nonstationary in levels but become stationary after first differencing. That is, if
 \[
 \Delta x_t = x_t - x_{t-1} \quad \text{is stationary (i.e., } I(0) \text{)},
 \]
-then ` x_t \sim I(1) `$. Unit root tests (e.g., the Augmented Dickey-Fuller test) are commonly used to assess whether a series exhibits such behavior.
+then \( x_t \sim I(1) \). Unit root tests (e.g., the Augmented Dickey-Fuller test) are commonly used to assess whether a series exhibits such behavior.
 
 ---
 
 ## 2. Definition of Cointegration
 
-Consider two or more time series, say ` \{x_t\} `$ and ` \{y_t\} `$, each of which is ` I(1) `$. Although individually nonstationary, these series are said to be *cointegrated* if there exists a linear combination that is stationary. Formally, if there exists a parameter ` \beta `$ such that
+Consider two or more time series, say \( \{x_t\} \) and \( \{y_t\} \), each of which is \( I(1) \). Although individually nonstationary, these series are said to be *cointegrated* if there exists a linear combination that is stationary. Formally, if there exists a parameter \( \beta \) such that
 \[
 z_t = y_t - \beta x_t \sim I(0),
 \]
-then ` \{x_t, y_t\} `$ are cointegrated. More generally, for a vector of ` k `$ ` I(1) `$ processes, ` \mathbf{x}_t = (x_{1,t}, x_{2,t}, \dots, x_{k,t})^\top `$, cointegration exists if there is a nonzero vector ` \beta \in \mathbb{R}^k `$ satisfying
+then \( \{x_t, y_t\} \) are cointegrated. More generally, for a vector of \( k \) \( I(1) \) processes, \( \mathbf{x}_t = (x_{1,t}, x_{2,t}, \dots, x_{k,t})^\top \), cointegration exists if there is a nonzero vector \( \beta \in \mathbb{R}^k \) satisfying
 \[
 \beta^\top \mathbf{x}_t \sim I(0).
 \]
@@ -33,10 +33,10 @@ A central result in cointegration theory is the Engle-Granger representation the
 \Delta y_t = \alpha (y_{t-1} - \beta x_{t-1}) + \gamma \Delta x_t + \epsilon_t,
 \]
 where:
-- ` (y_{t-1} - \beta x_{t-1}) `$ is the *error correction term* (ECT), which measures the deviation from the long-run equilibrium.
-- ` \alpha `$ is the adjustment coefficient, indicating how quickly the system corrects any disequilibrium.
-- ` \gamma `$ captures the short-run effect of changes in ` x_t `$ on ` y_t `$.
-- ` \epsilon_t `$ is a white noise error term.
+- \( (y_{t-1} - \beta x_{t-1}) \) is the *error correction term* (ECT), which measures the deviation from the long-run equilibrium.
+- \( \alpha \) is the adjustment coefficient, indicating how quickly the system corrects any disequilibrium.
+- \( \gamma \) captures the short-run effect of changes in \( x_t \) on \( y_t \).
+- \( \epsilon_t \) is a white noise error term.
 
 The ECM structure elegantly captures both the long-run equilibrium (through the ECT) and the short-run dynamics (through the differenced terms).
 
@@ -49,24 +49,24 @@ When dealing with more than two time series, the Johansen procedure provides a c
 \Delta \mathbf{x}_t = \Pi \mathbf{x}_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta \mathbf{x}_{t-i} + \mathbf{\epsilon}_t,
 \]
 where:
-- ` \mathbf{x}_t `$ is a ` k `$-dimensional vector of ` I(1) `$ variables.
-- ` \Pi `$ is a ` k \times k `$ matrix containing information about the long-run relationships.
-- ` \Gamma_i `$ are matrices that model the short-run dynamics.
-- ` \mathbf{\epsilon}_t `$ is a vector of error terms.
+- \( \mathbf{x}_t \) is a \( k \)-dimensional vector of \( I(1) \) variables.
+- \( \Pi \) is a \( k \times k \) matrix containing information about the long-run relationships.
+- \( \Gamma_i \) are matrices that model the short-run dynamics.
+- \( \mathbf{\epsilon}_t \) is a vector of error terms.
 
-The key is the rank of the matrix ` \Pi `$:
-- If `\text{rank}(\Pi) = r`$ with ` 0 < r < k `$, then there exist ` r `$ cointegrating vectors.
-- One can decompose ` \Pi `$ as:
+The key is the rank of the matrix \( \Pi \):
+- If \(\text{rank}(\Pi) = r\) with \( 0 < r < k \), then there exist \( r \) cointegrating vectors.
+- One can decompose \( \Pi \) as:
   \[
   \Pi = \alpha \beta^\top,
   \]
-  where ` \beta `$ is a ` k \times r `$ matrix whose columns are the cointegrating vectors, and ` \alpha `$ is a ` k \times r `$ matrix of adjustment coefficients. This decomposition is central to the Johansen testing procedure, which jointly tests the number of cointegrating relationships and estimates the corresponding vectors.
+  where \( \beta \) is a \( k \times r \) matrix whose columns are the cointegrating vectors, and \( \alpha \) is a \( k \times r \) matrix of adjustment coefficients. This decomposition is central to the Johansen testing procedure, which jointly tests the number of cointegrating relationships and estimates the corresponding vectors.
 
 ---
 
 ## 5. Estimation and Superconsistency
 
-An important statistical property in cointegrated systems is *superconsistency*. When estimating the cointegrating vector ` \beta `$ via methods such as OLS in the Engle-Granger framework, the estimator converges to the true parameter at rate ` T `$ (the sample size), which is faster than the usual ` \sqrt{T} `$ rate for stationary regressions. However, despite this superconsistency, the limiting distribution of the estimator is nonstandard, which requires special inference methods and adjustments (often via simulation or nonparametric corrections).
+An important statistical property in cointegrated systems is *superconsistency*. When estimating the cointegrating vector \( \beta \) via methods such as OLS in the Engle-Granger framework, the estimator converges to the true parameter at rate \( T \) (the sample size), which is faster than the usual \( \sqrt{T} \) rate for stationary regressions. However, despite this superconsistency, the limiting distribution of the estimator is nonstandard, which requires special inference methods and adjustments (often via simulation or nonparametric corrections).
 
 ---
 
@@ -176,7 +176,7 @@ Seasonality introduces additional periodic patterns that can complicate cointegr
 One straightforward strategy is to remove the seasonal component prior to performing cointegration tests. This can be done by:
 
 - **Seasonal Differencing:**  
-  For a series with a seasonal period ` s `$, you can apply a seasonal difference operator `\Delta_s x_t = x_t - x_{t-s}`$ to remove regular seasonal patterns. For example, if you have quarterly data (` s = 4 `$), differencing by lag 4 can help achieve stationarity in the seasonal frequency.
+  For a series with a seasonal period \( s \), you can apply a seasonal difference operator \(\Delta_s x_t = x_t - x_{t-s}\) to remove regular seasonal patterns. For example, if you have quarterly data (\( s = 4 \)), differencing by lag 4 can help achieve stationarity in the seasonal frequency.
 
 - **Seasonal Dummies or Filters:**  
   Alternatively, you can incorporate seasonal dummy variables into your cointegration regression or error correction model. This approach allows you to model deterministic seasonal effects without altering the underlying stochastic structure of the series.
@@ -191,14 +191,14 @@ Pre-adjusting the data helps ensure that the nonstationarity due solely to seaso
 When the seasonal component is stochastic, standard unit root tests may be inadequate. In such cases, specialized tests for seasonal unit roots, such as the **HEGY (Hylleberg, Engle, Granger, and Yoo) test**, are applied. These tests allow you to distinguish between nonstationarity coming from the seasonal frequency and that from the nonseasonal component.
 
 - **Seasonal Integration Orders:**  
-  A time series might be integrated at both nonseasonal and seasonal frequencies (e.g., ` I(1,1) `$), meaning that it requires both a regular and a seasonal differencing to achieve stationarity. Cointegration analysis in this context focuses on finding linear combinations that eliminate both sources of nonstationarity.
+  A time series might be integrated at both nonseasonal and seasonal frequencies (e.g., \( I(1,1) \)), meaning that it requires both a regular and a seasonal differencing to achieve stationarity. Cointegration analysis in this context focuses on finding linear combinations that eliminate both sources of nonstationarity.
 
 - **Seasonal Cointegrating Relationships:**  
   In a seasonal cointegration framework, the cointegrating vector may itself exhibit seasonal structure. The error correction model (ECM) can be extended to include seasonal adjustment mechanisms, such as seasonal dummy variables or seasonal lags. This ensures that the long-run equilibrium relationship accounts for the periodic behavior.
 
 *Example:*  
 Suppose you are analyzing monthly energy prices that exhibit seasonal spikes in winter. You might first apply the HEGY test to determine whether there are seasonal unit roots. If the test indicates seasonal integration, you could either:
-- **Seasonally difference** the series (e.g., ` x_t - x_{t-12} `$ for monthly data) before testing for cointegration, or  
+- **Seasonally difference** the series (e.g., \( x_t - x_{t-12} \) for monthly data) before testing for cointegration, or  
 - **Include seasonal dummies** in the cointegration regression to capture the periodic fluctuations.
 
 ---
