@@ -1,0 +1,180 @@
+# Mathematical Foundations of Cointegration
+
+## Formal Definition and Properties
+
+Cointegration describes a specific equilibrium relationship between non-stationary time series. Let's establish the formal framework:
+
+For a set of time series variables `\{X_{1t}, X_{2t}, ..., X_{nt}\}`$, each integrated of order `d`$ (denoted as `I(d)`$), they are said to be cointegrated of order `(d,b)`$, written as `CI(d,b)`$, if:
+
+1. Each individual series `X_{it}`$ is `I(d)`$.
+2. There exists a vector `\beta = (\beta_1, \beta_2, ..., \beta_n)' \neq 0`$ such that the linear combination `Z_t = \beta'X_t = \beta_1X_{1t} + \beta_2X_{2t} + ... + \beta_nX_{nt}`$ is integrated of order `(d-b)`$, where `b > 0`$.
+
+The most common case in financial applications is `CI(1,1)`$, where individual series are `I(1)`$ and their linear combination is `I(0)`$ (stationary).
+
+## Theoretical Framework: The Error Correction Model
+
+The Granger Representation Theorem establishes that cointegrated variables have an error correction representation. For a bivariate system with `X_t`$ and `Y_t`$ both `I(1)`$ and cointegrated, the Vector Error Correction Model (VECM) is:
+
+`\Delta X_t = \alpha_1(Y_{t-1} - \beta X_{t-1}) + \sum_{i=1}^{p} \gamma_{1i}\Delta X_{t-i} + \sum_{i=1}^{p} \delta_{1i}\Delta Y_{t-i} + \varepsilon_{1t}`$
+
+`\Delta Y_t = \alpha_2(Y_{t-1} - \beta X_{t-1}) + \sum_{i=1}^{p} \gamma_{2i}\Delta X_{t-i} + \sum_{i=1}^{p} \delta_{2i}\Delta Y_{t-i} + \varepsilon_{2t}`$
+
+where:
+- `(Y_{t-1} - \beta X_{t-1})`$ is the error correction term
+- `\alpha_1, \alpha_2`$ are adjustment speeds toward equilibrium
+- `\beta`$ is the cointegrating vector
+
+The VECM captures both short-run dynamics (via differenced terms) and long-run equilibrium (via error correction term).
+
+## Testing for Cointegration
+
+### Engle-Granger Two-Step Procedure
+
+1. Estimate the cointegrating relationship: `Y_t = \beta X_t + u_t`$
+2. Test the residuals `\hat{u}_t`$ for stationarity using augmented Dickey-Fuller (ADF) test
+3. If residuals are stationary, `X_t`$ and `Y_t`$ are cointegrated
+
+Critical values differ from standard ADF tests due to the estimation of `\beta`$.
+
+### Johansen Procedure
+
+For multivariate systems, the Johansen procedure is preferred. Consider a VAR(p) model:
+
+`X_t = \sum_{i=1}^{p} A_i X_{t-i} + \varepsilon_t`$
+
+Rewritten in VECM form:
+
+`\Delta X_t = \Pi X_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta X_{t-i} + \varepsilon_t`$
+
+where `\Pi = \sum_{i=1}^{p} A_i - I`$ and `\Gamma_i = -\sum_{j=i+1}^{p} A_j`$
+
+The rank of `\Pi`$ determines the number of cointegrating relationships:
+- If rank(`\Pi`$) = 0: No cointegration
+- If rank(`\Pi`$) = n: All variables are stationary
+- If 0 < rank(`\Pi`$) = r < n: There are r cointegrating relationships
+
+The Johansen procedure employs two test statistics:
+1. Trace test: `\lambda_{trace}(r) = -T\sum_{i=r+1}^{n}\ln(1-\hat{\lambda}_i)`$
+2. Maximum eigenvalue test: `\lambda_{max}(r,r+1) = -T\ln(1-\hat{\lambda}_{r+1})`$
+
+where `\hat{\lambda}_i`$ are the estimated eigenvalues of `\Pi`$.
+
+## Mathematical Properties of Cointegrated Systems
+
+### Triangular Representation
+
+Phillips' triangular representation provides insight into the structure of cointegrated systems:
+
+For cointegrated variables `X_t = (X_{1t}', X_{2t}')'`$ with r cointegrating relationships:
+
+`X_{1t} = \beta' X_{2t} + u_t`$
+`X_{2t} = X_{2,t-1} + v_t`$
+
+where `u_t`$ is `I(0)`$ and `v_t`$ is `I(1)`$.
+
+### Common Trends Representation
+
+The Stock-Watson representation expresses cointegrated systems in terms of common stochastic trends:
+
+`X_t = X_0 + \gamma \sum_{i=1}^{t} \eta_i + \epsilon_t`$
+
+where `\gamma`$ is an `n \times (n-r)`$ loading matrix, `\eta_i`$ are the `(n-r)`$ common stochastic trends, and `\epsilon_t`$ is `I(0)`$.
+
+This representation highlights that n variables with r cointegrating relationships share exactly `(n-r)`$ common stochastic trends.
+
+## Fractional Cointegration
+
+An extension to the standard framework is fractional cointegration, where the integration orders can be non-integer values. If `X_t`$ and `Y_t`$ are both `I(d)  $ and their linear combination is `I(d-b)`$ with `0 < b < d`$, they are fractionally cointegrated.
+
+The fractional VECM represents this relationship:
+
+`\Delta^d X_t = \alpha_1 \Delta^{d-b}(Y_{t-1} - \beta X_{t-1}) + \varepsilon_{1t}`$
+`\Delta^d Y_t = \alpha_2 \Delta^{d-b}(Y_{t-1} - \beta X_{t-1}) + \varepsilon_{2t}`$
+
+where `\Delta^d$ is the fractional differencing operator.
+
+This extends the applicability of cointegration to series with long memory properties.
+
+# Applications of Cointegration in Economics and Quantitative Finance
+
+## Macroeconomic Applications
+
+### Purchasing Power Parity (PPP)
+Cointegration provides empirical support for PPP theory by demonstrating long-run equilibrium between exchange rates and price differentials. For example, cointegration tests between USD/EUR exchange rates and US/Eurozone inflation differentials typically show a cointegrating relationship, despite short-term deviations.
+
+### Money Demand Function
+The relationship between money supply (M2), interest rates, GDP, and inflation has been examined through cointegration. Studies find cointegrating relationships between these variables, allowing central banks to model long-run money demand despite short-term fluctuations.
+
+### Term Structure of Interest Rates
+Cointegration analysis of yield curves reveals that while individual interest rates across different maturities are I(1), spreads between them are often stationary. For instance, the 10-year Treasury yield and 3-month T-bill rate typically show cointegration, with implications for monetary policy transmission.
+
+### Budget Deficits and Interest Rates
+Research using cointegration techniques has examined whether government spending and tax revenues are cointegrated. The absence of cointegration between these series would suggest fiscal policy unsustainability, while their cointegration implies long-run budget balance.
+
+## Equity Market Applications
+
+### ETF Pairs Trading
+Cointegration is extensively used in ETF arbitrage strategies:
+
+1. **Sector ETFs:** XLF (Financial Select Sector SPDR) and KBE (SPDR S&P Bank ETF) typically exhibit cointegration due to overlapping components but different weightings.
+
+2. **Geographic arbitrage:** EWJ (iShares MSCI Japan) and DXJ (WisdomTree Japan Hedged Equity Fund) show cointegration, with the spread reflecting currency hedging costs and implementation differences.
+
+3. **Index arbitrage:** SPY (S&P 500 ETF) and IVV (iShares Core S&P 500 ETF) track the same index and exhibit near-perfect cointegration, with minimal spreads due to tracking error and expense ratio differences.
+
+### Stock-Index Futures Basis
+The relationship between index futures (e.g., E-mini S&P 500) and their underlying cash indices (S&P 500) forms a cointegrating relationship. The basis (futures price minus spot price) is theoretically bound by cost-of-carry models, and deviations represent arbitrage opportunities.
+
+## Commodity Market Applications
+
+### Agricultural Commodities
+
+#### Cross-Commodity Relationships
+Corn and ethanol prices show robust cointegration due to corn's role as a primary ethanol input. The VECM adjustment parameters reveal how quickly ethanol producers adjust production when the corn-ethanol spread deviates from equilibrium.
+
+#### Geographic Arbitrage
+Soybean prices in Chicago (CBOT) and Dalian Commodity Exchange show cointegration despite transportation costs and import tariffs. Deviations beyond transportation and tariff costs represent potential arbitrage opportunities.
+
+#### Processing Spreads
+The soybean crush spread (soybeans vs. soybean meal and oil) shows cointegration as these markets are linked by processing relationships. When the crush spread deviates significantly from processing costs, processors adjust production.
+
+### Metals Markets
+
+#### Precious Metals
+Gold and silver prices exhibit strong cointegration, with the gold/silver ratio fluctuating around historical means. Trading strategies based on extreme values of this ratio have shown historical profitability.
+
+#### Industrial vs. Precious Metals
+Platinum and gold show cointegration despite platinum's significant industrial use. Their spread reflects changing industrial demand versus investment demand dynamics.
+
+#### Base Metals Basket
+Copper, aluminum, zinc, and nickel prices are cointegrated due to common macroeconomic drivers. The London Metal Exchange (LME) index components show multiple cointegrating relationships, allowing for basket trading strategies.
+
+### Energy Markets
+
+#### Crude Oil Benchmarks
+WTI and Brent crude oil prices demonstrate strong cointegration despite quality and location differences. The Brent-WTI spread reflects regional supply-demand imbalances, transportation constraints, and export policies.
+
+#### Natural Gas Geographic Arbitrage
+Henry Hub (US) and TTF (European) natural gas prices show evolving cointegration relationships. The development of LNG export capacity has strengthened these relationships over time, with the spread reflecting transportation costs and regional supply-demand dynamics.
+
+#### Crack Spreads
+Crude oil and refined products (gasoline, heating oil, diesel) show cointegration, with the "crack spread" reflecting refining margins. These spreads are crucial for refinery hedging and speculative trading.
+
+#### Electricity and Fuel Inputs
+Cointegration exists between electricity prices and their fuel inputs (natural gas, coal). The heat rate (conversion efficiency) determines the theoretical equilibrium relationship, with deviations signaling generation mix changes or market inefficiencies.
+
+## Practical Implementation Considerations
+
+### Time-Varying Cointegration
+Many financial relationships show regime-dependent cointegration. For example, WTI-Brent spread dynamics changed significantly after the 2011 Cushing transportation bottleneck and 2015 US crude export ban lifting. Modern approaches incorporate regime-switching models to capture these structural breaks.
+
+### Half-Life of Mean Reversion
+The speed of adjustment parameters in VECMs provide practical insights for trading. The half-life of mean reversion (ln(0.5)/ln(1+α)) helps determine optimal holding periods. ETF pairs typically show faster mean reversion (days to weeks) compared to macroeconomic relationships (months to years).
+
+### Basket Construction
+In multi-asset cointegration, the Johansen procedure identifies multiple cointegrating vectors. Portfolio managers optimize these vectors to maximize the Sharpe ratio of the resulting spread trades, rather than simply using the first eigenvector.
+
+### Transaction Cost Thresholds
+Practical implementation requires accounting for transaction costs. Trading signals are typically generated only when deviations exceed transaction cost thresholds, often expressed as multiples of the spread's standard deviation.
+
+By leveraging these cointegration applications, market participants can develop robust trading strategies, risk management approaches, and economic forecasts that exploit long-run equilibrium relationships while accounting for short-term dynamics.
