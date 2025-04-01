@@ -6,21 +6,21 @@ Below is an overview of the mathematical foundations of cointegration, tailored 
 
 ## 1. Integration and Unit Roots
 
-A time series ` `x_t`$_{t\in\mathbb{Z}} `$ is said to be *integrated of order* ` d `$, denoted ` I(d) `$, if it becomes stationary after differencing ` d `$ times. In practice, many economic and financial time series are nonstationary in levels but become stationary after first differencing. That is, if
+A time series `x_t, t \in \mathbb{Z} `$ is said to be *integrated of order* ` d `$, denoted ` I(d) `$, if it becomes stationary after differencing ` d `$ times. In practice, many economic and financial time series are nonstationary in levels but become stationary after first differencing. That is, if
 
-` \Delta x_t = x_t - x_{t-1} \quad \text{is stationary (i.e., } I(0) \text{)},\$
+` \Delta x_t = x_t - x_{t-1}`$ is stationary (i.e., I(0)),
 
-then ` x_t `$im I(1) `$. Unit root tests (e.g., the Augmented Dickey-Fuller test) are commonly used to assess whether a series exhibits such behavior.
+then ` x_t \sim I(1) `$. Unit root tests (e.g., the Augmented Dickey-Fuller test) are commonly used to assess whether a series exhibits such behavior.
 
 ---
 
 ## 2. Definition of Cointegration
 
-Consider two or more time series, say ` `x_t`$ `$ and ` `y_t`$ `$, each of which is ` I(1) `$. Although individually nonstationary, these series are said to be *cointegrated* if there exists a linear combination that is stationary. Formally, if there exists a parameter ` \beta `$ such that
+Consider two or more time series, say `x_t`$ and `y_t`$, each of which is ` I(1) `$. Although individually nonstationary, these series are said to be *cointegrated* if there exists a linear combination that is stationary. Formally, if there exists a parameter ` \beta `$ such that
 
 `z_t = y_t - \beta x_t \sim I(0),`$
 
-then  `x_t, y_t`$ `$ are cointegrated. More generally, for a vector of ` k `$ ` I(1) `$ processes, ` \mathbf{x}_t = (x_{1,t}, x_{2,t}, \dots, x_{k,t})^\top `$, cointegration exists if there is a nonzero vector ` \beta \in \mathbb{R}^k `$ satisfying
+then  `x_t, y_t`$ `$ are cointegrated. More generally, for a vector of ` k I(1) `$ processes, ` \mathbf{x}_t = (x_{1,t}, x_{2,t}, \dots, x_{k,t})^\top `$, cointegration exists if there is a nonzero vector ` \beta \in \mathbb{R}^k `$ satisfying
 
 `\beta^\top \mathbf{x}_t \sim I(0).\$
 
