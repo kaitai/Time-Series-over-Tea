@@ -7,9 +7,9 @@ Below is an overview of the mathematical foundations of cointegration, tailored 
 ## 1. Integration and Unit Roots
 
 A time series ` `x_t`$_{t\in\mathbb{Z}} `$ is said to be *integrated of order* ` d `$, denoted ` I(d) `$, if it becomes stationary after differencing ` d `$ times. In practice, many economic and financial time series are nonstationary in levels but become stationary after first differencing. That is, if
-\[
-\Delta x_t = x_t - x_{t-1} \quad \text{is stationary (i.e., } I(0) \text{)},
-\]
+
+` \Delta x_t = x_t - x_{t-1} \quad \text{is stationary (i.e., } I(0) \text{)},\$
+
 then ` x_t `$im I(1) `$. Unit root tests (e.g., the Augmented Dickey-Fuller test) are commonly used to assess whether a series exhibits such behavior.
 
 ---
@@ -17,13 +17,13 @@ then ` x_t `$im I(1) `$. Unit root tests (e.g., the Augmented Dickey-Fuller test
 ## 2. Definition of Cointegration
 
 Consider two or more time series, say ` `x_t`$ `$ and ` `y_t`$ `$, each of which is ` I(1) `$. Although individually nonstationary, these series are said to be *cointegrated* if there exists a linear combination that is stationary. Formally, if there exists a parameter ` \beta `$ such that
-\[
-z_t = y_t - \beta x_t `$im I(0),
-\]
-then ` `x_t, y_t`$ `$ are cointegrated. More generally, for a vector of ` k `$ ` I(1) `$ processes, ` \mathbf{x}_t = (x_{1,t}, x_{2,t}, \dots, x_{k,t})^\top `$, cointegration exists if there is a nonzero vector ` \beta \in \mathbb{R}^k `$ satisfying
-\[
-\beta^\top \mathbf{x}_t `$im I(0).
-\]
+
+`z_t = y_t - \beta x_t \sim I(0),`$
+
+then  `x_t, y_t`$ `$ are cointegrated. More generally, for a vector of ` k `$ ` I(1) `$ processes, ` \mathbf{x}_t = (x_{1,t}, x_{2,t}, \dots, x_{k,t})^\top `$, cointegration exists if there is a nonzero vector ` \beta \in \mathbb{R}^k `$ satisfying
+
+`\beta^\top \mathbf{x}_t \sim I(0).\$
+
 This stationary linear combination represents a long-run equilibrium relation among the variables, despite the presence of individual stochastic trends.
 
 ---
@@ -31,13 +31,13 @@ This stationary linear combination represents a long-run equilibrium relation am
 ## 3. The Error Correction Model (ECM)
 
 A central result in cointegration theory is the Engle-Granger representation theorem, which shows that if two series are cointegrated, then their dynamics can be expressed in an Error Correction Model. For instance, for two cointegrated series, one can write:
-\[
-\Delta y_t = \alpha (y_{t-1} - \beta x_{t-1}) + `$amma \Delta x_t + \epsilon_t,
-\]
+
+`\Delta y_t = \alpha (y_{t-1} - \beta x_{t-1}) + \gamma \Delta x_t + \epsilon_t,`$
+
 where:
 - ` (y_{t-1} - \beta x_{t-1}) `$ is the *error correction term* (ECT), which measures the deviation from the long-run equilibrium.
 - ` \alpha `$ is the adjustment coefficient, indicating how quickly the system corrects any disequilibrium.
-- ` `$amma `$ captures the short-run effect of changes in ` x_t `$ on ` y_t `$.
+- ` \gamma `$ captures the short-run effect of changes in ` x_t `$ on ` y_t `$.
 - ` \epsilon_t `$ is a white noise error term.
 
 The ECM structure elegantly captures both the long-run equilibrium (through the ECT) and the short-run dynamics (through the differenced terms).
@@ -47,9 +47,9 @@ The ECM structure elegantly captures both the long-run equilibrium (through the 
 ## 4. The Johansen Method for Multivariate Cointegration
 
 When dealing with more than two time series, the Johansen procedure provides a comprehensive framework for identifying multiple cointegrating relationships. The starting point is a Vector Error Correction Model (VECM) of the form:
-\[
-\Delta \mathbf{x}_t = \Pi \mathbf{x}_{t-1} + `$um_{i=1}^{p-1} \Gamma_i \Delta \mathbf{x}_{t-i} + \mathbf{\epsilon}_t,
-\]
+
+`\Delta \mathbf{x}_t = \Pi \mathbf{x}_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta \mathbf{x}_{t-i} + \mathbf{\epsilon}_t, `$
+
 where:
 - ` \mathbf{x}_t `$ is a ` k `$-dimensional vector of ` I(1) `$ variables.
 - ` \Pi `$ is a ` k \times k `$ matrix containing information about the long-run relationships.
@@ -59,16 +59,16 @@ where:
 The key is the rank of the matrix ` \Pi `$:
 - If `\text{rank}(\Pi) = r`$ with ` 0 < r < k `$, then there exist ` r `$ cointegrating vectors.
 - One can decompose ` \Pi `$ as:
-  \[
-  \Pi = \alpha \beta^\top,
-  \]
+  
+  `\Pi = \alpha \beta^\top,`$
+  
   where ` \beta `$ is a ` k \times r `$ matrix whose columns are the cointegrating vectors, and ` \alpha `$ is a ` k \times r `$ matrix of adjustment coefficients. This decomposition is central to the Johansen testing procedure, which jointly tests the number of cointegrating relationships and estimates the corresponding vectors.
 
 ---
 
 ## 5. Estimation and Superconsistency
 
-An important statistical property in cointegrated systems is *superconsistency*. When estimating the cointegrating vector ` \beta `$ via methods such as OLS in the Engle-Granger framework, the estimator converges to the true parameter at rate ` T `$ (the sample size), which is faster than the usual ` `$qrt{T} `$ rate for stationary regressions. However, despite this superconsistency, the limiting distribution of the estimator is nonstandard, which requires special inference methods and adjustments (often via simulation or nonparametric corrections).
+An important statistical property in cointegrated systems is *superconsistency*. When estimating the cointegrating vector ` \beta `$ via methods such as OLS in the Engle-Granger framework, the estimator converges to the true parameter at rate ` T `$ (the sample size), which is faster than the usual ` \sqrt{T} `$ rate for stationary regressions. However, despite this superconsistency, the limiting distribution of the estimator is nonstandard, which requires special inference methods and adjustments (often via simulation or nonparametric corrections).
 
 ---
 
@@ -210,3 +210,7 @@ Suppose you are analyzing monthly energy prices that exhibit seasonal spikes in 
 Dealing with seasonal time series in cointegration involves recognizing and appropriately addressing seasonal nonstationarity—either by pre-filtering the series to remove seasonal effects or by using specialized testing and modeling frameworks that incorporate seasonal dynamics. The choice of method depends on whether the seasonality is deterministic or stochastic, and on the nature of the underlying data. In practice, careful diagnostic testing (e.g., with the HEGY test) and model specification are key to reliably identifying long-run equilibrium relationships in the presence of seasonality.
 
 This approach ensures that both the short-run dynamics and the long-run relationships remain correctly specified, leading to more robust inference and forecasting in economic and financial applications.
+
+Authorship: o3-mini-high by OpenAI, with tweaks from Kaisa. 
+
+Tea pairing: Constant Comment, a pairing of orange rind and spices and black tea.

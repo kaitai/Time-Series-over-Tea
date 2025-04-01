@@ -6,7 +6,7 @@ Cointegration describes a specific equilibrium relationship between non-stationa
 
 For a set of time series variables `\{X_{1t}, X_{2t}, ..., X_{nt}\}`$, each integrated of order `d`$ (denoted as `I(d)`$), they are said to be cointegrated of order `(d,b)`$, written as `CI(d,b)`$, if:
 
-1. Each individual series `X_{it}`$ is `I(d)`$.
+1. Each individual series `X_{it}`$ is `I(d)`$. This integration order was covered in the first half of the semester and then again when we visited ARIMA.
 2. There exists a vector `\beta = (\beta_1, \beta_2, ..., \beta_n)' \neq 0`$ such that the linear combination `Z_t = \beta'X_t = \beta_1X_{1t} + \beta_2X_{2t} + ... + \beta_nX_{nt}`$ is integrated of order `(d-b)`$, where `b > 0`$.
 
 The most common case in financial applications is `CI(1,1)`$, where individual series are `I(1)`$ and their linear combination is `I(0)`$ (stationary).
@@ -26,6 +26,8 @@ where:
 
 The VECM captures both short-run dynamics (via differenced terms) and long-run equilibrium (via error correction term).
 
+KT comment: I'd find some motivation for this error correction model useful here. Who cares? What's it for? What's an example? There is some reference to this below. Move it up to combine the theoretical with the practical.
+
 ## Testing for Cointegration
 
 ### Engle-Granger Two-Step Procedure
@@ -34,13 +36,15 @@ The VECM captures both short-run dynamics (via differenced terms) and long-run e
 2. Test the residuals `\hat{u}_t`$ for stationarity using augmented Dickey-Fuller (ADF) test
 3. If residuals are stationary, `X_t`$ and `Y_t`$ are cointegrated
 
-Critical values differ from standard ADF tests due to the estimation of `\beta`$.
+Critical values differ from standard ADF tests due to the estimation of `\beta`$. KT comment: this bit needs more elaboration -- it's a true yet low-content statement
 
 ### Johansen Procedure
 
 For multivariate systems, the Johansen procedure is preferred. Consider a VAR(p) model:
 
 `X_t = \sum_{i=1}^{p} A_i X_{t-i} + \varepsilon_t`$
+
+KT comment: We gotta define a VAR model for this to be useful!!
 
 Rewritten in VECM form:
 
@@ -82,16 +86,18 @@ where `\gamma`$ is an `n \times (n-r)`$ loading matrix, `\eta_i`$ are the `(n-r)
 
 This representation highlights that n variables with r cointegrating relationships share exactly `(n-r)`$ common stochastic trends.
 
+KT comment: another place where I'd want some examples -- this could be very rich and I'd love to find a macro example and a commodity food example to include right here. Good examples are included below, but again, I prefer pairing the practical and theoretical more closely.
+
 ## Fractional Cointegration
 
-An extension to the standard framework is fractional cointegration, where the integration orders can be non-integer values. If `X_t`$ and `Y_t`$ are both `I(d)  $ and their linear combination is `I(d-b)`$ with `0 < b < d`$, they are fractionally cointegrated.
+An extension to the standard framework is fractional cointegration, where the integration orders can be non-integer values. If `X_t`$ and `Y_t`$ are both `I(d)`$ and their linear combination is `I(d-b)`$ with `0 < b < d`$, they are fractionally cointegrated.
 
 The fractional VECM represents this relationship:
 
 `\Delta^d X_t = \alpha_1 \Delta^{d-b}(Y_{t-1} - \beta X_{t-1}) + \varepsilon_{1t}`$
 `\Delta^d Y_t = \alpha_2 \Delta^{d-b}(Y_{t-1} - \beta X_{t-1}) + \varepsilon_{2t}`$
 
-where `\Delta^d$ is the fractional differencing operator.
+where `\Delta^d`$ is the fractional differencing operator.
 
 This extends the applicability of cointegration to series with long memory properties.
 
@@ -222,9 +228,9 @@ For series with common seasonal patterns:
 - Seasonal cointegration occurs when series share common stochastic seasonality
 - The seasonal error correction model (SECM) extends the standard VECM:
 
-$$\Delta_s X_t = \sum_{i=1}^{s-1} \Pi_i X_{t-i} + \Gamma \Delta_s X_{t-1} + \varepsilon_t$$
+`\Delta_s X_t = \sum_{i=1}^{s-1} \Pi_i X_{t-i} + \Gamma \Delta_s X_{t-1} + \varepsilon_t`$
 
-Where $\Delta_s$ is the seasonal differencing operator (e.g., $\Delta_{12}$ for monthly data)
+Where `\Delta_s`$ is the seasonal differencing operator (e.g., `\Delta_{12}`$ for monthly data)
 
 ### 3. Including Seasonal Dummies in VECM
 
@@ -232,9 +238,9 @@ For deterministic seasonality:
 
 - Augment the VECM with seasonal dummy variables:
 
-$$\Delta X_t = \alpha\beta' X_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta X_{t-i} + \sum_{j=1}^{s-1} \delta_j D_{jt} + \varepsilon_t$$
+`\Delta X_t = \alpha\beta' X_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta X_{t-i} + \sum_{j=1}^{s-1} \delta_j D_{jt} + \varepsilon_t`$
 
-Where $D_{jt}$ are seasonal dummies
+where `D_{jt}`$ are seasonal dummies
 
 - This handles deterministic seasonality while preserving the underlying cointegrating relationship
 - The seasonal dummies can be included in either the cointegrating vector or the short-run dynamics
@@ -277,12 +283,12 @@ Some ETF pairs exhibit systematic calendar effects:
 
 For relationships that vary systematically by season:
 
-- Allow cointegrating vectors to change across seasons (e.g., different $\beta$ for winter vs. summer)
+- Allow cointegrating vectors to change across seasons (e.g., different `\beta`$ for winter vs. summer)
 - Periodic VECMs capture season-specific adjustment dynamics:
 
-$$\Delta X_{ns+s} = \alpha_s \beta_s' X_{ns+s-1} + \sum_{i=1}^{p-1} \Gamma_{is} \Delta X_{ns+s-i} + \varepsilon_{ns+s}$$
+`\Delta X_{ns+s} = \alpha_s \beta_s' X_{ns+s-1} + \sum_{i=1}^{p-1} \Gamma_{is} \Delta X_{ns+s-i} + \varepsilon_{ns+s}`$
 
-Where subscript $s$ indicates season-specific parameters
+Where subscript `s`$ indicates season-specific parameters
 
 ### Fractional Seasonal Integration
 
@@ -321,3 +327,6 @@ For trading applications:
 6. Implement season-specific trading parameters (position sizing, stop-losses) to reflect changing dynamics
 
 By properly accounting for seasonality in cointegration analysis, you can develop more robust models that capture both the long-run equilibrium relationships and the seasonal patterns that characterize many financial and economic time series.
+
+Authorship: Claude and editing/commentary by Kaisa. I will remix the order to pair the theoretical and practical more closely. Tea: Earl Grey or Jasmine Green, both classic examples of pairings. 
+

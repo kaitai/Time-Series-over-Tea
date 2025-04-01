@@ -1,0 +1,74 @@
+# Introduction to STL (Seasonal-Trend Decomposition using LOESS)
+
+STL is a versatile and robust procedure for decomposing time series into seasonal, trend, and remainder components. Developed by Cleveland et al. (1990), it's particularly useful for series with complex seasonal patterns that may evolve over time.
+
+## Fundamental Decomposition
+
+For a time series `Y_t`$, STL decomposes it as
+
+`Y_t = T_t + S_t + R_t`$
+
+where
+- `T_t`$ is the trend component
+- `S_t`$ is the seasonal component
+- `R_t`$ is the remainder (or residual) component
+
+## LOESS (Locally Estimated Scatterplot Smoothing)
+
+The foundation of STL is LOESS regression, which is a non-parametric method that fits multiple regression models locally to subsets of the data. For a set of points `(x_i, y_i)`$, LOESS works as follows:
+
+1. For each point `x`$, select `q`$ nearest neighbors (where `q = \lambda n`$ is the span, typically 0.25 to 0.5). KT comment: What is span? what is `n`$? I think this is the smoothing parameter, but this should be clarified.
+2. Assigns weights using a tri-cubic function: `w_i = (1 - |\frac{x_i - x}{d_x}|^3)^3`$ where `d_x`$ is the distance to the furthest neighbor. KT comment: so we're assigning this weight to the points `(x_i, y_i)`$, if I understand correctly, in this neighborhood
+3. Fits a weighted polynomial regression (usually degree 1 or 2). KT Comment: then fit a weighted polynomial regression using the points `(x_i, y_i)`$. I'd like this to be much more explicit
+4. Uses the fitted value at `x`$ as the smoothed value
+
+## STL Algorithm
+
+STL operates through nested loops:
+
+### Inner Loop
+1. **Detrending**: Compute `Y_t - T_t`$ (initially `T_t`$ may be set to 0)
+2. **Cycle-Subseries Smoothing**: For each position in the seasonal cycle, apply LOESS to the values at that position across different cycles
+3. **Low-Pass Filtering**: Apply a moving average followed by LOESS to the cycle-subseries results. KT comment: how does this part make sense? why do moving average followed by loess? What are you doing this moving average on? why do you do loess then?
+4. **Detrending the Seasonal Component**: Subtract the low-pass filter result from cycle-subseries smoothing
+5. **Deseasonalizing**: Calculate `Y_t - S_t`$
+6. **Trend Smoothing**: Apply LOESS to the deseasonalized data to estimate `T_t`$
+
+### Outer Loop
+Introduces robustness by computing weights based on the residuals:
+- `\rho_t = |R_t|`$
+- `w_t = B({\rho_t}/h)`$ where `B`$ is the bisquare function: `B(u) = (1-u^2)^2`$ for `0 \leq u < 1`$ and 0 otherwise. KT: Where is this `w_t`$ used in the future? It never comes up again
+- `h`$ is typically set to 6 × median`|\rho_t|`$. KT comment: What is `h`$? Why do we set it to six times the median absolute residual?
+
+These weights are then used in subsequent inner loop iterations, giving less influence to observations with large residuals.
+
+## Key Parameters
+
+- `n_p`$ = Period of seasonal component
+- `n_i`$ = Number of inner loop iterations (typically 1 or 2)
+- `n_o`$ = Number of outer loop iterations (typically 0 to 10)
+- `\lambda_s`$ = Seasonal smoothing parameter (span for seasonal LOESS)
+- `\lambda_t`$ = Trend smoothing parameter (span for trend LOESS)
+- `\lambda_l`$ = Low-pass filter smoothing parameter
+
+## Properties and Advantages
+
+- Handles any seasonality period (unlike classical decomposition)
+- Allows for evolving seasonality (changing seasonal patterns)
+- Robust to outliers through the outer loop weighting mechanism
+- Flexible control over smoothness of components
+- Missing values can be handled within the LOESS framework
+
+## Connection to Financial Time Series
+
+For financial applications, STL is valuable because:
+1. Financial data often exhibits evolving seasonal patterns (e.g., changing volatility clusters)
+2. Robustness to outliers is crucial when dealing with market shocks
+3. The decomposition provides intuitive components that align with financial theory (cyclical patterns, underlying trends, and "noise")
+
+In your subsequent forecasting applications, you can model and forecast each component separately, then recombine them—a strategy that often yields better results than direct forecasting of the original series.
+
+Authorship: this is straight from Claude 3.7 Sonnet. I'm rather impressed -- output was automatically in Markdown, it included discussion of the low-pass filter, and it provided more mathematical detail. Thoughts?
+Turns out the variety of Markdown supported by Leanpub is Markua and math formulas need backticks rather than dollar signs alone. However, still pretty good.
+
+Suggested tea: Try this over a crisp pouchong/baozhong oolong. A versatile tea, flavorful, and you can resteep the leaves for many cups & get a good result!
