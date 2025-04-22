@@ -1,0 +1,280 @@
+# Chapter: Bayesian Structural Time Series
+
+## 1. Introduction to Bayesian Structural Time Series
+
+Bayesian structural time series (BSTS) models combine the interpretability of structural time series with the flexibility of Bayesian methods. This approach allows for incorporating prior knowledge, quantifying parameter uncertainty, and handling missing data in a principled way. The Bayesian perspective treats all unknown parameters as random variables with associated probability distributions, rather than fixed quantities to be estimated.
+
+## 2. Review of Bayes' Rule
+
+### 2.1 Bayes' Theorem
+
+Bayes' theorem provides the mathematical foundation for updating beliefs in light of new evidence:
+
+$$P(θ|y) = \frac{P(y|θ)P(θ)}{P(y)}$$
+
+Where:
+- $P(θ|y)$ is the posterior distribution (updated belief about parameters given the data)
+- $P(y|θ)$ is the likelihood (probability of observing the data given the parameters)
+- $P(θ)$ is the prior distribution (initial belief about parameters)
+- $P(y)$ is the marginal likelihood or evidence (total probability of observing the data)
+
+The posterior is often written proportionally as:
+
+$$P(θ|y) \propto P(y|θ)P(θ)$$
+
+### 2.2 Bayesian Inference Principles
+
+Key concepts in Bayesian inference include:
+
+1. **Prior Distributions**: Encode initial beliefs about model parameters
+   - Informative priors incorporate domain knowledge
+   - Weakly informative priors provide regularization
+   - Non-informative priors express minimal assumptions
+
+2. **Posterior Distributions**: Represent updated beliefs after observing data
+   - Quantify uncertainty about parameter values
+   - Enable probabilistic forecasting
+
+3. **Credible Intervals**: Bayesian analogs to confidence intervals
+   - Direct probability statements about parameters
+   - Can be asymmetric if the posterior is skewed
+
+4. **Prediction**: Based on integrating over parameter uncertainty
+   - Posterior predictive distribution: $p(y_{new}|y) = \int p(y_{new}|θ)p(θ|y)dθ$
+
+## 3. Bayesian State Space Models
+
+### 3.1 Probabilistic Formulation
+
+A Bayesian state space model extends the classical state space framework by treating all parameters as random variables:
+
+1. **State Equation**:
+   $$α_{t+1} = T_t α_t + R_t η_t, \quad η_t \sim N(0, Q_t)$$
+
+2. **Observation Equation**:
+   $$y_t = Z_t α_t + ε_t, \quad ε_t \sim N(0, H_t)$$
+
+3. **Parameter Distributions**:
+   $$T_t, Z_t, R_t, Q_t, H_t \sim \text{Prior distributions}$$
+
+### 3.2 Bayesian Filtering and Smoothing
+
+The Bayesian perspective leads to these key conditional distributions:
+
+1. **Filtering Distribution**: $p(α_t|y_{1:t}, θ)$
+2. **Prediction Distribution**: $p(α_{t+h}|y_{1:t}, θ)$
+3. **Smoothing Distribution**: $p(α_t|y_{1:T}, θ)$
+4. **Parameter Posterior**: $p(θ|y_{1:T})$
+
+For linear Gaussian models, the Kalman filter and smoother provide analytical solutions for the first three distributions given fixed parameters. The parameter posterior typically requires simulation methods.
+
+## 4. Bayesian Structural Time Series Components
+
+### 4.1 Trend Components
+
+In the Bayesian framework, trend components have prior distributions on their variance parameters:
+
+1. **Local Level Model**:
+   $$μ_{t+1} = μ_t + η_t, \quad η_t \sim N(0, σ^2_η)$$
+   $$σ^2_η \sim \text{Inverse-Gamma}(a_η, b_η)$$
+
+2. **Local Linear Trend**:
+   $$μ_{t+1} = μ_t + ν_t + η_t, \quad η_t \sim N(0, σ^2_η)$$
+   $$ν_{t+1} = ν_t + ζ_t, \quad ζ_t \sim N(0, σ^2_ζ)$$
+   $$σ^2_η \sim \text{Inverse-Gamma}(a_η, b_η)$$
+   $$σ^2_ζ \sim \text{Inverse-Gamma}(a_ζ, b_ζ)$$
+
+### 4.2 Seasonal Components
+
+The Bayesian treatment of seasonal components:
+
+$$γ_{t+1} = -\sum_{j=0}^{s-2} γ_{t-j} + ω_t, \quad ω_t \sim N(0, σ^2_ω)$$
+$$σ^2_ω \sim \text{Inverse-Gamma}(a_ω, b_ω)$$
+
+### 4.3 Cycle Components
+
+Stochastic cycle components with period and dampening parameters:
+
+$$\begin{pmatrix} ψ_t \\ ψ^*_t \end{pmatrix} = ρ \begin{pmatrix} \cos λ & \sin λ \\ -\sin λ & \cos λ \end{pmatrix} \begin{pmatrix} ψ_{t-1} \\ ψ^*_{t-1} \end{pmatrix} + \begin{pmatrix} κ_t \\ κ^*_t \end{pmatrix}$$
+
+$$κ_t, κ^*_t \sim N(0, σ^2_κ)$$
+$$σ^2_κ \sim \text{Inverse-Gamma}(a_κ, b_κ)$$
+$$ρ \sim \text{Beta}(a_ρ, b_ρ)$$
+$$λ \sim \text{prior reflecting periodicity beliefs}$$
+
+### 4.4 Regression Components
+
+For regression effects with time-varying coefficients:
+
+$$β_{t+1} = β_t + ξ_t, \quad ξ_t \sim N(0, Σ_β)$$
+$$Σ_β \sim \text{Inverse-Wishart}(ν_β, S_β)$$
+
+## 5. Prior Specification
+
+### 5.1 Common Prior Choices
+
+1. **Variance Parameters**: Inverse-Gamma priors
+   - $\text{IG}(a, b)$ with mean $\frac{b}{a-1}$ for $a > 1$
+   - Small values of $a$ and $b$ (e.g., 0.01) for weakly informative priors
+
+2. **Autoregressive Parameters**: Beta priors transformed to (-1,1)
+   - Encourages stationarity
+
+3. **Initial State**: Normal priors
+   - Often with large variances for non-stationary components
+
+### 5.2 Spike-and-Slab Priors for Variable Selection
+
+For automatic variable selection in regression components:
+
+$$β_j \sim γ_j N(0, τ^2_j) + (1-γ_j)δ_0$$
+$$γ_j \sim \text{Bernoulli}(π_j)$$
+
+Where $δ_0$ is a point mass at zero and $γ_j$ indicates inclusion of variable $j$.
+
+## 6. Posterior Computation
+
+### 6.1 Gibbs Sampling for BSTS
+
+The standard approach uses Gibbs sampling to alternate between:
+
+1. **Sample States**: Draw from $p(α_{1:T}|y_{1:T}, θ)$ using Kalman simulation smoother
+2. **Sample Parameters**: Draw from $p(θ|y_{1:T}, α_{1:T})$ which often decomposes into:
+   - Variance parameters: Inverse-Gamma full conditionals
+   - Regression coefficients: Normal full conditionals
+   - Inclusion indicators: Bernoulli full conditionals
+
+### 6.2 Forward Filtering Backward Sampling (FFBS)
+
+A key algorithm for sampling states:
+
+1. Run Kalman filter forward to get $a_t$ and $P_t$
+2. Sample $α_T$ from $N(a_T, P_T)$
+3. Recursively sample backwards:
+   $$α_t|α_{t+1}, y_{1:T} \sim N(h_t, H_t)$$
+   $$h_t = a_t + P_t T_t'(T_t P_t T_t' + R_t Q_t R_t')^{-1}(α_{t+1} - T_t a_t)$$
+   $$H_t = P_t - P_t T_t'(T_t P_t T_t' + R_t Q_t R_t')^{-1}T_t P_t$$
+
+### 6.3 Markov Chain Monte Carlo (MCMC) Diagnostics
+
+Important diagnostics for BSTS models:
+
+1. **Convergence Assessment**:
+   - Trace plots for parameters
+   - Gelman-Rubin statistic for multiple chains
+   - Effective sample size calculations
+
+2. **Model Check**:
+   - Posterior predictive checks
+   - Residual analysis
+
+## 7. Advantages of Bayesian Structural Time Series
+
+### 7.1 Uncertainty Quantification
+
+Bayesian methods fully characterize uncertainty in:
+- Model parameters
+- State estimates
+- Forecasts
+
+### 7.2 Model Averaging and Selection
+
+Bayesian approaches enable:
+- Computing model probabilities
+- Averaging forecasts across models
+- Selecting variables via posterior probabilities
+- Incorporating model uncertainty
+
+### 7.3 Incorporating Prior Information
+
+Prior distributions can reflect:
+- Expert knowledge
+- Historical data
+- Physical constraints
+- Seasonal patterns
+
+## 8. Application: Causal Impact Analysis
+
+One powerful application of BSTS is measuring causal effects in time series:
+
+### 8.1 The Framework
+
+1. **Pre-treatment period**: Establish relationships between the target series and control series
+2. **Post-treatment period**: Construct a counterfactual using control series
+3. **Causal effect**: Difference between observed and counterfactual series
+
+### 8.2 Model Structure
+
+$$y_t = Z_t α_t + β'x_t + ε_t$$
+
+Where:
+- $y_t$ is the target series
+- $Z_t α_t$ represents structural components (trend, seasonality)
+- $x_t$ are control series (unaffected by intervention)
+- $β$ are coefficients (with spike-and-slab priors for variable selection)
+
+### 8.3 Inference
+
+1. Estimate model on pre-treatment data
+2. Predict counterfactual for post-treatment period
+3. Calculate point-wise causal effects: $y_t - \hat{y}_t$
+4. Aggregate effects over time: $\sum_{t>T_0} (y_t - \hat{y}_t)$
+5. Report posterior distributions of effects
+
+## 9. Application: Financial Time Series
+
+BSTS models are valuable in financial applications:
+
+### 9.1 Asset Allocation
+
+Time-varying portfolio weights based on:
+- Return forecasts with uncertainty
+- Regime-switching volatility models
+- Predictive distributions for risk measures
+
+### 9.2 Option Pricing
+
+BSTS extensions for:
+- Stochastic volatility models
+- Jump processes
+- Term structure modeling
+
+## 10. Software and Implementation
+
+Popular software packages for BSTS include:
+
+1. **R packages**:
+   - bsts (by Google)
+   - CausalImpact
+   - KFAS (with Bayesian extensions)
+
+2. **MCMC Frameworks**:
+   - JAGS
+   - Stan
+   - PyMC
+
+3. **Sequential Monte Carlo Methods**:
+   - Particle filters for non-linear/non-Gaussian cases
+
+## 11. Conclusion
+
+Bayesian structural time series models offer:
+- Interpretable decompositions of time series data
+- Principled handling of uncertainty
+- Integration of prior knowledge
+- Flexibility for extensions beyond standard models
+- Tools for causal inference and decision-making under uncertainty
+
+As computational methods continue to advance, BSTS models are becoming increasingly practical for complex applications requiring both interpretability and uncertainty quantification.
+
+## References
+
+1. Scott, S. L., & Varian, H. R. (2014). Predicting the present with Bayesian structural time series. International Journal of Mathematical Modelling and Numerical Optimisation, 5(1-2), 4-23.
+
+2. Brodersen, K. H., Gallusser, F., Koehler, J., Remy, N., & Scott, S. L. (2015). Inferring causal impact using Bayesian structural time series. The Annals of Applied Statistics, 9(1), 247-274.
+
+3. West, M., & Harrison, J. (2006). Bayesian Forecasting and Dynamic Models. Springer Science & Business Media.
+
+4. Durbin, J., & Koopman, S. J. (2012). Time Series Analysis by State Space Methods. Oxford University Press.
+
+5. Petris, G., Petrone, S., & Campagnoli, P. (2009). Dynamic Linear Models with R. Springer.
