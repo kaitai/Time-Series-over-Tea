@@ -7,3 +7,4 @@ cointegration-o3-mini-high.txt
 pairs-trading-o3-mini-high.txt
 cointegration-claude.txt
 pairs-trading-claude.txt
+structural-time-series-claude.txt
