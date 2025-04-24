@@ -1,0 +1,38 @@
+# A crash course in machine learning
+
+I'm going to write this out by hand, in a human-tapping-on-the-keyboard way, because then it'll match my lecture. This is a very high-level overview of what is by now considered "classical" machine learning (what a name for something still so relatively new!).
+
+## Unsupervised versus supervised learning
+
+  The first broad intellectual structure you need to organize your incipient knowledge is the dichotomy between supervised and unsupervised learning. 
+
+  Supervised learning involves a dataset with "features" (your inputs) and "targets" (the output that your machine learning algorithm will train to produce). One famous example is the MNIST handwriting set -- thousands of bitmaps of handwritten numerals, all labeled with the corresponding digit. This dataset was initially intended in testing machine learning (ML) algorithms that would enable better character recognition by the United States Postal Service when automating the reading of addresses.
+
+  Another example of supervised learning: you have a time series (univariate or multivariate) in which you've labeled certain regimes. Another example: the classic Titanic passenger dataset, in which data about passengers is labelled by whether they died or survived. 
+
+  When you are presented with a captcha that asks you to click on all images containing a motorcycle or a bus or a crosswalk, you are doing the work of labeling a dataset so that supervised learning techniques can be applied in training self-driving cars. 
+
+  Unsupervised learning, by contrast, seeks to have the algorithm "discover" the structure of the data. For instance, you might feed an unsupervised ML algorithm with a number of time series and ask it to tell you how to cluster the time series in a mathematically meaningful way.
+
+  We can apply both paradigms in quantitative finance, depending on our goals. (What are your goals, again? and your metrics of success or failure?)
+
+  ## Clustering, classification, and regression
+
+  The next intellectual structure you need is the big three classical types of algorithm. Classification algorithms aim to classify data into sets (true/false, dead/alive for the Titanic passengers, malignant/benign for tumors, the numerals as mentioned for the MNIST dataset). Clustering aims to group the data in a meaninful way, using some distance metric that is appropriate. Regression outputs a number. 
+
+  Generally clustering is discussed in an unsupervised context, while classification is in a supervised context -- because you already have a label you want to predict.
+
+        Let's go through some examples here (I will come back to this, leaving just an outline for now).
+### Decision trees
+
+          ### Random forests
+
+          ### Bagging and Boosting
+          
+  ## How do we combine with time series?
+
+        One big idea is that you should consider dimensions other than time. You can apply clustering, or classification, or regression to windows of time. For instance, maybe you take a daily time series, bucket it into months, and carry out clustering on each month to see if you've got a varying structure in the data. Or you fit a time series model to the bulk of the historical data, but then fit a separate regression model on additional variables that allow you to adjust the jump-off point for forecasting. 
+
+            To do: add several more concrete examples here.
+
+        One important 
