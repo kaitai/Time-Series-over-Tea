@@ -1,4 +1,4 @@
-STL-decomposition-Claude.txt
+STL-decomposition-Claude-Kt-comment.txt
 STL-decomposition-o3-mini-high.txt
 what-are-your-goals.txt
 setting-up-your-train-test-splits-claude.txt
@@ -7,4 +7,7 @@ cointegration-o3-mini-high.txt
 pairs-trading-o3-mini-high.txt
 cointegration-claude.txt
 pairs-trading-claude.txt
-structural-time-series-claude.txt
+structural-time-series-claude-markua.txt
+Kalman-filter-and-smoother-Claude-markua.txt
+Bayesian-structural-time-series.txt
+crash-course-ml-human.txt
