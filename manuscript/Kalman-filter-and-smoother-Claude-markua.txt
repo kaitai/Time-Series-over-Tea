@@ -94,7 +94,7 @@ The most common smoothing approach is fixed-interval smoothing, which estimates 
    - Update the smoothed state estimate:
      `a_{t|n} = a_t + P_t T_t' P_{t+1|t}^{-1} (a_{t+1|n} - T_t a_t)`$
      or equivalently:
-     `a_{t|n} = a_t + P_t L_t' P_{t+1|t}^{-1} (a_{t+1|n} - a_{t+1}|t})`$
+     `a_{t|n} = a_t + P_t L_t' P_{t+1|t}^{-1} (a_{t+1|n} - a_{t+1|t})`$
    
    - Update the smoothed state covariance:
      `P_{t|n} = P_t + P_t L_t' P_{t+1|t}^{-1} (P_{t+1|n} - P_{t+1|t}) P_{t+1|t}^{-1} L_t P_t`$
