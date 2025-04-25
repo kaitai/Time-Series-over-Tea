@@ -138,21 +138,21 @@ Holt's method is equivalent to the optimal forecast from a linear trend model wi
 The Holt-Winters method extends Holt's linear method to include seasonality:
 
 **Additive Seasonality:**
-`\ell_t = \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1`{format: latexmath}})
-`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-`{format: latexmath}}
+`\ell_t = \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1})`{format: latexmath}
+`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1}`{format: latexmath}
 `s_t = \gamma(y_t - \ell_t) + (1-\gamma)s_{t-m}`{format: latexmath}
 `\hat{y}_{t+h|t} = \ell_t + h \cdot b_t + s_{t+h-m(k)}`{format: latexmath}
 
 **Multiplicative Seasonality:**
-`\ell_t = \alpha\frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-1`{format: latexmath}})
-`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1`{format: latexmath}}
+`\ell_t = \alpha\frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-1})`{format: latexmath}
+`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1}`{format: latexmath}
 `s_t = \gamma\frac{y_t}{\ell_t} + (1-\gamma)s_{t-m}`{format: latexmath}
 `\hat{y}_{t+h|t} = (\ell_t + h \cdot b_t) \times s_{t+h-m(k)}`{format: latexmath}
 
 Where:
 - `m`$ is the seasonal period
 - `s_t`$ is the seasonal component
-- `\gamma`$ is the seasonal smoothing parameter (`0 < \gamma < 1`{format: latexmath})
+- `\gamma`$ is the seasonal smoothing parameter (`0 < \gamma < 1)`{format: latexmath}
 - `k`$ is chosen so that `t+h-m(k)`$ is the most recent season matching the season of `t+h`$
 
 ## 7.5 Naive Forecasting Methods
@@ -173,15 +173,15 @@ The last value method, sometimes called the naive method, uses the most recent o
 
 `\hat{y}_{t+h|t} = y_t`$
 
-This method is equivalent to exponential smoothing with `\alpha = `{format: latexmath}$.
+This method is equivalent to exponential smoothing with `\alpha = 1`{format: latexmath}.
 
 ### 7.5.3 Comparison with Exponential Smoothing
 
 The simple average and last value methods represent two extremes:
-- The simple average method (`\alpha = \frac{1}{t}`{format: latexmath}) gives equal weight to all observations
+- The simple average method (`\alpha = \frac{1}{t})`{format: latexmath} gives equal weight to all observations
 - The last value method (`\alpha = 1`{format: latexmath}) gives all weight to the most recent observation
 
-Exponential smoothing (`0 < \alpha <1 `{format: latexmath}) provides a middle ground, assigning decreasing weights to older observations while maintaining some influence from historical data.
+Exponential smoothing (`0 < \alpha <1) `{format: latexmath} provides a middle ground, assigning decreasing weights to older observations while maintaining some influence from historical data.
 
 ## 7.6 Model Selection and Evaluation
 
