@@ -70,8 +70,8 @@ When a new observation `y_t$ arrives, the filter updates the state estimate:
 
 The complete Kalman filter algorithm proceeds recursively:
 
-1. Initialize with `a_1`{format: latexmath} and `P_``{format: latexmath}
-2. For `t = 1, 2, ..., n$:
+1. Initialize with `a_1`{format: latexmath} and `P_1`{format: latexmath}
+2. For `t = 1, 2, ..., n`$:
    - Compute prediction `a_{t|t-1}`$ and `P_{t|t-1}`$
    - Compute innovation `v_t`$ and its covariance `F_t`$
    - Update state estimate `a_t`$ and `P_t`$
@@ -85,9 +85,9 @@ While the Kalman filter provides estimates based on past and current observation
 
 The most common smoothing approach is fixed-interval smoothing, which estimates `\alpha_t`$ using all observations `y_1, ..., y_n`$:
 
-1. **Forward pass**: Run the Kalman filter forward in time, storing all `a_t`$ and `P_t`$.
+1. *Forward pass*: Run the Kalman filter forward in time, storing all `a_t`$ and `P_t`$.
 
-2. **Backward pass**: Starting from `t = n-1`$ and moving backward:
+2. *Backward pass*: Starting from `t = n-1`$ and moving backward:
    - Compute the smoothing gain:
      `L_t = T_t - K_{t+1} Z_{t+1} T_t`$
    
@@ -111,14 +111,14 @@ Sometimes we want to estimate the state disturbances `\eta_t`$ and observation d
 2. **Smoothed state disturbances**:
    `\hat{\eta}_t = Q_t R_t' r_t`$
 
-where `r_t$ is a recursive quantity computed in the backward pass:
+where `r_t`$ is a recursive quantity computed in the backward pass:
 `r_{t-1} = Z_t' F_t^{-1} v_t + L_t' r_t, \quad r_n = 0`$
 
 ### 3.3 Information Filter and Smoother
 
 For certain problems, particularly with diffuse priors, the information filter (working with precision matrices) can be more numerically stable:
 
-`a_t = P_t P_t^{-1} a_t = P_t \beta_t1$
+`a_t = P_t P_t^{-1} a_t = P_t \beta_t1`$
 
 Where `\beta_t = P_t^{-1} a_t`$ is the information vector and `P_t^{-1}`$ is the information matrix.
 
