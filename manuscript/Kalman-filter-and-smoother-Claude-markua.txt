@@ -29,9 +29,9 @@ The system is initialized with `\alpha_1 \sim N(a_1, P_1)`$, where `a_1`$ is the
 
 The Kalman filter addresses three key estimation problems:
 
-1. **Filtering**: Estimating $\alpha_t$ given observations up to time $t$: `p(\alpha_t|y_1,...,y_t)`$
-2. **Prediction**: Estimating $\alpha_{t+j}$ given observations up to time $t$: `p(\alpha_{t+j}|y_1,...,y_t)1$ where `j > 0`$
-3. **Smoothing**: Estimating $\alpha_t$ given all observations: `p(\alpha_t|y_1,...,y_n)`$ where `n > t`$
+1. **Filtering**: Estimating   `\alpha_t`$ given observations up to time `t`$: `p(\alpha_t|y_1,...,y_t)`$
+2. **Prediction**: Estimating `\alpha_{t+j}`$ given observations up to time `t`$: `p(\alpha_{t+j}|y_1,...,y_t)1$ where `j > 0`$
+3. **Smoothing**: Estimating `\alpha_t`$ given all observations: `p(\alpha_t|y_1,...,y_n)`$ where `n > t`$
 
 ## 2. The Kalman Filter Algorithm
 
@@ -49,7 +49,7 @@ Given the state estimate `a_t = E(\alpha_t|y_1,...,y_{t-1})`$ and its covariance
 
 ### 2.2 Update Step
 
-When a new observation $y_t$ arrives, the filter updates the state estimate:
+When a new observation `y_t$ arrives, the filter updates the state estimate:
 
 1. **Innovation** (prediction error):
    `v_t = y_t - Z_t a_{t|t-1}`$
@@ -85,7 +85,7 @@ While the Kalman filter provides estimates based on past and current observation
 
 The most common smoothing approach is fixed-interval smoothing, which estimates `\alpha_t`$ using all observations `y_1, ..., y_n`$:
 
-1. **Forward pass**: Run the Kalman filter forward in time, storing all $a_t$ and `P_t`$.
+1. **Forward pass**: Run the Kalman filter forward in time, storing all `a_t`$ and `P_t`$.
 
 2. **Backward pass**: Starting from `t = n-1`$ and moving backward:
    - Compute the smoothing gain:
@@ -111,7 +111,7 @@ Sometimes we want to estimate the state disturbances `\eta_t`$ and observation d
 2. **Smoothed state disturbances**:
    `\hat{\eta}_t = Q_t R_t' r_t`$
 
-Where $r_t$ is a recursive quantity computed in the backward pass:
+where `r_t$ is a recursive quantity computed in the backward pass:
 `r_{t-1} = Z_t' F_t^{-1} v_t + L_t' r_t, \quad r_n = 0`$
 
 ### 3.3 Information Filter and Smoother
@@ -231,7 +231,7 @@ The model can be estimated using:
 2. **One-step approach**:
    - Use the EM algorithm with Kalman smoother
    - E-step: Compute smoothed factors
-   - M-step: Update `\Lambda$, $\Phi$, $Q$, and $\Psi`$
+   - M-step: Update `\Lambda$, `\Phi$, `Q$, and `\Psi`$
 
 ### 6.3 Application to Macroeconomic Forecasting
 
