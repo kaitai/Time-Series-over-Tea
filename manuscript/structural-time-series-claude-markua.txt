@@ -16,14 +16,14 @@ The local level model, also known as the random walk plus noise model, is the si
 
 The local level model is formulated as:
 
-$$y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_\varepsilon^2)$$
-`\mu_{t+`{format: latexmath}} = \mu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_\eta^2)$$
+`y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_\varepsilon^2)`{format: latexmath}
+`\mu_{t+1} = \mu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_\eta^2)`{format: latexmath}
 
 Where:
-- $y_t$ is the observed value at time $t$
-- $\mu_t$ is the unobserved local level at time $t$
-- $\varepsilon_t$ is the observation noise (or irregular component)
-- $\eta_t$ is the level disturbance
+- `y_t`$ is the observed value at time `t`$
+- `\mu_t`$ is the unobserved local level at time `t`$
+- `\varepsilon_t`$ is the observation noise (or irregular component)
+- `\eta_t`$ is the level disturbance
 
 This model assumes that the underlying level follows a random walk process, while the observations are subject to random noise around this level.
 
@@ -31,27 +31,27 @@ This model assumes that the underlying level follows a random walk process, whil
 
 A key parameter in the local level model is the signal-to-noise ratio, defined as:
 
-$$q = \frac{\sigma_\eta^2}{\sigma_\varepsilon^2}$$
+`q = \frac{\sigma_\eta^2}{\sigma_\varepsilon^2}`$
 
 This ratio determines how quickly the model adapts to new information:
-- When $q$ is large, the model adapts quickly to changes in the observed data
-- When $q$ is small, the model places more weight on historical values and adapts slowly
+- When `q`$ is large, the model adapts quickly to changes in the observed data
+- When `q`$ is small, the model places more weight on historical values and adapts slowly
 
 ### 7.2.3 Special Cases
 
 The local level model encompasses several important special cases:
-- When $\sigma_\eta^2 = 0$, the level is constant and the model reduces to a white noise process around a fixed mean
-- When $\sigma_\varepsilon^2 = 0$, the model becomes a pure random walk
+- When `\sigma_\eta^2 = 0`$, the level is constant and the model reduces to a white noise process around a fixed mean
+- When `\sigma_\varepsilon^2 = 0`$, the model becomes a pure random walk
 - When both variances are positive, the model balances between stability and adaptability
 
 ### 7.2.4 State Space Representation
 
 The local level model can be written in state space form:
 
-State equation: `\mu_{t+`{format: latexmath}} = \mu_t + \eta_t$
-Observation equation: $y_t = \mu_t + \varepsilon_t$
+State equation: `\mu_{t+1} = \mu_t + \eta_t`{format: latexmath}
+Observation equation: `y_t = \mu_t + \varepsilon_t`{format: latexmath}
 
-This representation facilitates estimation using the Kalman filter, which provides optimal estimates of the unobserved state $\mu_t$ based on observations up to time $t$.
+This representation facilitates estimation using the Kalman filter, which provides optimal estimates of the unobserved state `\mu_t`$ based on observations up to time $t$.
 
 ## 7.3 The Linear Trend Model
 
@@ -61,33 +61,33 @@ The linear trend model extends the local level model by incorporating a time-var
 
 The linear trend model is formulated as:
 
-$$y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_\varepsilon^2)$$
-`\mu_{t+`{format: latexmath}} = \mu_t + \nu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_\eta^2)$$
-`\nu_{t+`{format: latexmath}} = \nu_t + \zeta_t, \quad \zeta_t \sim N(0, \sigma_\zeta^2)$$
+`y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_\varepsilon^2)`$
+`\mu_{t+1} = \mu_t + \nu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_\eta^2)`$
+`\nu_{t+`} = \nu_t + \zeta_t, \quad \zeta_t \sim N(0, \sigma_\zeta^2)`$
 
 Where:
-- $y_t$ is the observed value at time $t$
-- $\mu_t$ is the level component at time $t$
-- $\nu_t$ is the trend (or slope) component at time $t$
-- $\varepsilon_t$, $\eta_t$, and $\zeta_t$ are normally distributed disturbances
+- `y_t`$ is the observed value at time `t`$
+- `\mu_t`$ is the level component at time `t`$
+- `\nu_t`$ is the trend (or slope) component at time `t`$
+- `\varepsilon_t`$, `\eta_t`$, and `\zeta_t`$ are normally distributed disturbances
 
 ### 7.3.2 Model Variations
 
 Several important variations of the linear trend model exist:
 
-1. **Local Linear Trend Model**: Both level and slope are stochastic ($\sigma_\eta^2 > 0, \sigma_\zeta^2 > 0$)
-2. **Smooth Trend Model**: Level is stochastic but slope is deterministic ($\sigma_\eta^2 = 0, \sigma_\zeta^2 > 0$)
-3. **Random Walk with Drift**: Slope is fixed ($\sigma_\zeta^2 = 0$)
+1. **Local Linear Trend Model**: Both level and slope are stochastic (`\sigma_\eta^2 > 0, \sigma_\zeta^2 > 0`$)
+2. **Smooth Trend Model**: Level is stochastic but slope is deterministic (`\sigma_\eta^2 = 0, \sigma_\zeta^2 > 0`$)
+3. **Random Walk with Drift**: Slope is fixed (`\sigma_\zeta^2 = 0`$)
 
 ### 7.3.3 State Space Representation
 
 The linear trend model can be written in state space form:
 
 State equation: 
-`\begin{pmatrix} \mu_{t+1} \\ \nu_{t+1} \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 0 & `{format: latexmath} \end{pmatrix} \begin{pmatrix} \mu_t \\ \nu_t \end{pmatrix} + \begin{pmatrix} \eta_t \\ \zeta_t \end{pmatrix}$$
+`\begin{pmatrix} \mu_{t+1} \\ \nu_{t+1} \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} \mu_t \\ \nu_t \end{pmatrix} + \begin{pmatrix} \eta_t \\ \zeta_t \end{pmatrix}`{format: latexmath}
 
 Observation equation: 
-`y_t = \begin{pmatrix} `{format: latexmath} & 0 \end{pmatrix} \begin{pmatrix} \mu_t \\ \nu_t \end{pmatrix} + \varepsilon_t$$
+`y_t = \begin{pmatrix}1 & 0 \end{pmatrix} \begin{pmatrix} \mu_t \\ \nu_t \end{pmatrix} + \varepsilon_t `{format: latexmath}
 
 ## 7.4 Exponential Smoothing Models
 
@@ -97,21 +97,21 @@ Exponential smoothing models provide a family of forecasting methods that assign
 
 Simple exponential smoothing is appropriate for time series without clear trend or seasonality. It can be formulated as:
 
-`\hat{y}_{t+1|t} = \alpha y_t + (1-\alpha)\hat{y}_{t|t-`{format: latexmath}}$$
+`\hat{y}_{t+1|t} = \alpha y_t + (1-\alpha)\hat{y}_{t|t-1}`{format: latexmath}
 
 Where:
-- `\hat{y}_{t+`{format: latexmath}|t}$ is the forecast for time `t+`{format: latexmath}$ made at time $t$
-- $\alpha$ is the smoothing parameter (`0 < \alpha < `{format: latexmath}$)
+- `\hat{y}_{t+1|t}`{format: latexmath} is the forecast for time `t+1`{format: latexmath} made at time `t`$
+- `\alpha`$ is the smoothing parameter (`0 < \alpha < 1)`{format: latexmath})
 
 The forecast can be written recursively as a weighted average of all past observations:
 
-`\hat{y}_{t+1|t} = \alpha \sum_{j=0}^{t-1} (1-\alpha)^j y_{t-j} + (1-\alpha)^t \hat{y}_{`{format: latexmath}|0}$$
+`\hat{y}_{t+1|t} = \alpha \sum_{j=0}^{t-1} (1-\alpha)^j y_{t-j} + (1-\alpha)^t \hat{y}_{1|0}`{format: latexmath}
 
 #### Connection to Local Level Model
 
 Simple exponential smoothing is equivalent to the optimal forecast from a local level model with:
 
-`q = \frac{\alpha}{`{format: latexmath}-\alpha}$$
+`q = \frac{\alpha}{1-\alpha}`$
 
 Where $q$ is the signal-to-noise ratio defined earlier.
 
@@ -119,15 +119,15 @@ Where $q$ is the signal-to-noise ratio defined earlier.
 
 Holt's method extends simple exponential smoothing to handle data with trends:
 
-`\ell_t = \alpha y_t + (1-\alpha)(\ell_{t-1} + b_{t-`{format: latexmath}})$$
-`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-`{format: latexmath}}$$
-$$\hat{y}_{t+h|t} = \ell_t + h \cdot b_t$$
+`\ell_t = \alpha y_t + (1-\alpha)(\ell_{t-1} + b_{t-1})`{format: latexmath}
+`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1}`{format: latexmath}
+`\hat{y}_{t+h|t} = \ell_t + h \cdot b_t`{format: latexmath}
 
 Where:
-- $\ell_t$ is the level estimate at time $t$
-- $b_t$ is the trend estimate at time $t$
-- $\alpha$ and $\beta$ are smoothing parameters (`0 < \alpha, \beta < `{format: latexmath}$)
-- $h$ is the forecast horizon
+- `\ell_t`$ is the level estimate at time `t`$
+- `b_t`$ is the trend estimate at time `t`$
+- `\alpha`$ and `\beta`$ are smoothing parameters (`0 < \alpha, \beta < 1)`{format: latexmath}
+- `h`$ is the forecast horizon
 
 #### Connection to Linear Trend Model
 
@@ -138,22 +138,22 @@ Holt's method is equivalent to the optimal forecast from a linear trend model wi
 The Holt-Winters method extends Holt's linear method to include seasonality:
 
 **Additive Seasonality:**
-`\ell_t = \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-`{format: latexmath}})$$
-`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-`{format: latexmath}}$$
-`s_t = \gamma(y_t - \ell_t) + (`{format: latexmath}-\gamma)s_{t-m}$$
-$$\hat{y}_{t+h|t} = \ell_t + h \cdot b_t + s_{t+h-m(k)}$$
+`\ell_t = \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1`{format: latexmath}})
+`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-`{format: latexmath}}
+`s_t = \gamma(y_t - \ell_t) + (1-\gamma)s_{t-m}`{format: latexmath}
+`\hat{y}_{t+h|t} = \ell_t + h \cdot b_t + s_{t+h-m(k)}`{format: latexmath}
 
 **Multiplicative Seasonality:**
-`\ell_t = \alpha\frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-`{format: latexmath}})$$
-`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-`{format: latexmath}}$$
-`s_t = \gamma\frac{y_t}{\ell_t} + (`{format: latexmath}-\gamma)s_{t-m}$$
-$$\hat{y}_{t+h|t} = (\ell_t + h \cdot b_t) \times s_{t+h-m(k)}$$
+`\ell_t = \alpha\frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-1`{format: latexmath}})
+`b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1`{format: latexmath}}
+`s_t = \gamma\frac{y_t}{\ell_t} + (1-\gamma)s_{t-m}`{format: latexmath}
+`\hat{y}_{t+h|t} = (\ell_t + h \cdot b_t) \times s_{t+h-m(k)}`{format: latexmath}
 
 Where:
-- $m$ is the seasonal period
-- $s_t$ is the seasonal component
-- $\gamma$ is the seasonal smoothing parameter (`0 < \gamma < `{format: latexmath}$)
-- $k$ is chosen so that $t+h-m(k)$ is the most recent season matching the season of $t+h$
+- `m`$ is the seasonal period
+- `s_t`$ is the seasonal component
+- `\gamma`$ is the seasonal smoothing parameter (`0 < \gamma < 1`{format: latexmath})
+- `k`$ is chosen so that `t+h-m(k)`$ is the most recent season matching the season of `t+h`$
 
 ## 7.5 Naive Forecasting Methods
 
@@ -163,25 +163,25 @@ Naive forecasting methods serve as important benchmarks against which to evaluat
 
 The simple average method uses the mean of all historical observations as the forecast:
 
-`\hat{y}_{t+h|t} = \frac{1}{t}\sum_{j=`{format: latexmath}}^{t}y_j$$
+`\hat{y}_{t+h|t} = \frac{1}{t}\sum_{j=1}^{t}y_j`{format: latexmath}
 
-This method is equivalent to exponential smoothing with `\alpha = \frac{`{format: latexmath}}{t}$.
+This method is equivalent to exponential smoothing with `\alpha = \frac{1}{t}`{format: latexmath}.
 
 ### 7.5.2 Last Value Method (Naive Method)
 
 The last value method, sometimes called the naive method, uses the most recent observation as the forecast:
 
-$$\hat{y}_{t+h|t} = y_t$$
+`\hat{y}_{t+h|t} = y_t`$
 
 This method is equivalent to exponential smoothing with `\alpha = `{format: latexmath}$.
 
 ### 7.5.3 Comparison with Exponential Smoothing
 
 The simple average and last value methods represent two extremes:
-- The simple average method (`\alpha = \frac{`{format: latexmath}}{t}$) gives equal weight to all observations
-- The last value method (`\alpha = `{format: latexmath}$) gives all weight to the most recent observation
+- The simple average method (`\alpha = \frac{1}{t}`{format: latexmath}) gives equal weight to all observations
+- The last value method (`\alpha = 1`{format: latexmath}) gives all weight to the most recent observation
 
-Exponential smoothing (`0 < \alpha < `{format: latexmath}$) provides a middle ground, assigning decreasing weights to older observations while maintaining some influence from historical data.
+Exponential smoothing (`0 < \alpha <1 `{format: latexmath}) provides a middle ground, assigning decreasing weights to older observations while maintaining some influence from historical data.
 
 ## 7.6 Model Selection and Evaluation
 
