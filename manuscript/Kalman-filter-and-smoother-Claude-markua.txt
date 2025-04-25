@@ -9,29 +9,29 @@ State space models provide a powerful framework for analyzing time series data b
 A linear state space model consists of two equations:
 
 1. **State Equation** (Transition Equation):
-   `\alpha_{t+`{format: latexmath}} = T_t \alpha_t + R_t \eta_t, \quad \eta_t \sim N(0, Q_t)$$
+   `\alpha_{t+1} = T_t \alpha_t + R_t \eta_t, \quad \eta_t \sim N(0, Q_t)`{format: latexmath}
 
 2. **Observation Equation** (Measurement Equation):
-   $$y_t = Z_t \alpha_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, H_t)$$
+   `y_t = Z_t \alpha_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, H_t)`{format: latexmath}
 
 Where:
-- $\alpha_t$ is the state vector at time $t$
-- $y_t$ is the observation vector at time $t$
-- $T_t$ is the transition matrix
-- $Z_t$ is the measurement matrix
-- $R_t$ is the selection matrix for state disturbances
-- $\eta_t$ is the state disturbance vector with covariance matrix $Q_t$
-- $\varepsilon_t$ is the observation disturbance vector with covariance matrix $H_t$
+- `\alpha_t`{format: latexmath} is the state vector at time `t`$
+- `y_t`{format: latexmath} is the observation vector at time `t`$
+- `T_t`{format: latexmath} is the transition matrix
+- `Z_t`{format: latexmath} is the measurement matrix
+- `R_t`{format: latexmath} is the selection matrix for state disturbances
+- `\eta_t`{format: latexmath} is the state disturbance vector with covariance matrix `Q_t`$
+- `\varepsilon_t`{format: latexmath} is the observation disturbance vector with covariance matrix `H_t`$
 
-The system is initialized with `\alpha_1 \sim N(a_1, P_`{format: latexmath})$, where `a_`{format: latexmath}$ is the initial state estimate and `P_`{format: latexmath}$ is its covariance matrix.
+The system is initialized with `\alpha_1 \sim N(a_1, P_1)`$, where `a_1`$ is the initial state estimate and `P_1`$ is its covariance matrix.
 
 ### 1.2 The Filtering Problem
 
 The Kalman filter addresses three key estimation problems:
 
-1. **Filtering**: Estimating $\alpha_t$ given observations up to time $t$: `p(\alpha_t|y_`{format: latexmath},...,y_t)$
-2. **Prediction**: Estimating $\alpha_{t+j}$ given observations up to time $t$: `p(\alpha_{t+j}|y_`{format: latexmath},...,y_t)$ where $j > 0$
-3. **Smoothing**: Estimating $\alpha_t$ given all observations: `p(\alpha_t|y_`{format: latexmath},...,y_n)$ where $n > t$
+1. **Filtering**: Estimating $\alpha_t$ given observations up to time $t$: `p(\alpha_t|y_1,...,y_t)`$
+2. **Prediction**: Estimating $\alpha_{t+j}$ given observations up to time $t$: `p(\alpha_{t+j}|y_1,...,y_t)1$ where `j > 0`$
+3. **Smoothing**: Estimating $\alpha_t$ given all observations: `p(\alpha_t|y_1,...,y_n)`$ where `n > t`$
 
 ## 2. The Kalman Filter Algorithm
 
@@ -39,43 +39,43 @@ The Kalman filter is a recursive Bayesian estimator that operates in two steps: 
 
 ### 2.1 Prediction Step
 
-Given the state estimate `a_t = E(\alpha_t|y_1,...,y_{t-`{format: latexmath}})$ and its covariance `P_t = Var(\alpha_t|y_1,...,y_{t-`{format: latexmath}})$, the prediction step computes:
+Given the state estimate `a_t = E(\alpha_t|y_1,...,y_{t-1})`$ and its covariance `P_t = Var(\alpha_t|y_1,...,y_{t-`})`$, the prediction step computes:
 
 1. **State prediction**:
-   `a_{t|t-1} = T_{t-1} a_{t-`{format: latexmath}}$$
+   `a_{t|t-1} = T_{t-1} a_{t-1}`$
 
 2. **Covariance prediction**:
-   `P_{t|t-1} = T_{t-1} P_{t-1} T_{t-1}' + R_{t-1} Q_{t-1} R_{t-`{format: latexmath}}'$$
+   `P_{t|t-1} = T_{t-1} P_{t-1} T_{t-1}' + R_{t-1} Q_{t-1} R_{t-1}'`$
 
 ### 2.2 Update Step
 
 When a new observation $y_t$ arrives, the filter updates the state estimate:
 
 1. **Innovation** (prediction error):
-   `v_t = y_t - Z_t a_{t|t-`{format: latexmath}}$$
+   `v_t = y_t - Z_t a_{t|t-1}`$
 
 2. **Innovation covariance**:
-   `F_t = Z_t P_{t|t-`{format: latexmath}} Z_t' + H_t$$
+   `F_t = Z_t P_{t|t-1} Z_t' + H_t`$
 
 3. **Kalman gain**:
-   `K_t = P_{t|t-1} Z_t' F_t^{-`{format: latexmath}}$$
+   `K_t = P_{t|t-1} Z_t' F_t^{-1}`$
 
 4. **Updated state estimate**:
-   `a_t = a_{t|t-`{format: latexmath}} + K_t v_t$$
+   `a_t = a_{t|t-1} + K_t v_t`$
 
 5. **Updated state covariance**:
-   `P_t = P_{t|t-1} - K_t Z_t P_{t|t-`{format: latexmath}}$$
+   `P_t = P_{t|t-1} - K_t Z_t P_{t|t-1}`$
 
 ### 2.3 The Kalman Filter Recursion
 
 The complete Kalman filter algorithm proceeds recursively:
 
-1. Initialize with `a_`{format: latexmath}$ and `P_`{format: latexmath}$
-2. For `t = `{format: latexmath}, 2, ..., n$:
-   - Compute prediction `a_{t|t-`{format: latexmath}}$ and `P_{t|t-`{format: latexmath}}$
-   - Compute innovation $v_t$ and its covariance $F_t$
-   - Update state estimate $a_t$ and $P_t$
-   - Predict next state `a_{t+`{format: latexmath}|t}$ and `P_{t+`{format: latexmath}|t}$
+1. Initialize with `a_1`{format: latexmath} and `P_``{format: latexmath}
+2. For `t = 1, 2, ..., n$:
+   - Compute prediction `a_{t|t-1}`$ and `P_{t|t-1}`$
+   - Compute innovation `v_t`$ and its covariance `F_t`$
+   - Update state estimate `a_t`$ and `P_t`$
+   - Predict next state `a_{t+1|t}`$ and `P_{t+1|t}`$
 
 ## 3. The Kalman Smoother
 
@@ -83,44 +83,44 @@ While the Kalman filter provides estimates based on past and current observation
 
 ### 3.1 Fixed-Interval Smoothing
 
-The most common smoothing approach is fixed-interval smoothing, which estimates $\alpha_t$ using all observations `y_`{format: latexmath}, ..., y_n$:
+The most common smoothing approach is fixed-interval smoothing, which estimates `\alpha_t`$ using all observations `y_1, ..., y_n`$:
 
-1. **Forward pass**: Run the Kalman filter forward in time, storing all $a_t$ and $P_t$.
+1. **Forward pass**: Run the Kalman filter forward in time, storing all $a_t$ and `P_t`$.
 
-2. **Backward pass**: Starting from `t = n-`{format: latexmath}$ and moving backward:
+2. **Backward pass**: Starting from `t = n-1`$ and moving backward:
    - Compute the smoothing gain:
-     `L_t = T_t - K_{t+1} Z_{t+`{format: latexmath}} T_t$$
+     `L_t = T_t - K_{t+1} Z_{t+1} T_t`$
    
    - Update the smoothed state estimate:
-     `a_{t|n} = a_t + P_t T_t' P_{t+1|t}^{-1} (a_{t+`{format: latexmath}|n} - T_t a_t)$$
+     `a_{t|n} = a_t + P_t T_t' P_{t+1|t}^{-1} (a_{t+1|n} - T_t a_t)`$
      or equivalently:
-     `a_{t|n} = a_t + P_t L_t' P_{t+1|t}^{-1} (a_{t+1|n} - a_{t+`{format: latexmath}|t})$$
+     `a_{t|n} = a_t + P_t L_t' P_{t+1|t}^{-1} (a_{t+1|n} - a_{t+1}|t})`$
    
    - Update the smoothed state covariance:
-     `P_{t|n} = P_t + P_t L_t' P_{t+1|t}^{-1} (P_{t+1|n} - P_{t+1|t}) P_{t+1|t}^{-`{format: latexmath}} L_t P_t$$
+     `P_{t|n} = P_t + P_t L_t' P_{t+1|t}^{-1} (P_{t+1|n} - P_{t+1|t}) P_{t+1|t}^{-1} L_t P_t`$
 
-3. Initialize the backward recursion with $a_{n|n} = a_n$ and $P_{n|n} = P_n$.
+3. Initialize the backward recursion with `a_{n|n} = a_n`$ and `P_{n|n} = P_n`$.
 
 ### 3.2 Disturbance Smoothing
 
-Sometimes we want to estimate the state disturbances $\eta_t$ and observation disturbances $\varepsilon_t$. The smoothed disturbances are:
+Sometimes we want to estimate the state disturbances `\eta_t`$ and observation disturbances `\varepsilon_t`$. The smoothed disturbances are:
 
 1. **Smoothed observation disturbances**:
-   `\hat{\varepsilon}_t = H_t F_t^{-1} v_t - H_t F_t^{-`{format: latexmath}} Z_t K_t' r_t$$
+   `\hat{\varepsilon}_t = H_t F_t^{-1} v_t - H_t F_t^{-1} Z_t K_t' r_t`$
 
 2. **Smoothed state disturbances**:
-   $$\hat{\eta}_t = Q_t R_t' r_t$$
+   `\hat{\eta}_t = Q_t R_t' r_t`$
 
 Where $r_t$ is a recursive quantity computed in the backward pass:
-`r_{t-1} = Z_t' F_t^{-`{format: latexmath}} v_t + L_t' r_t, \quad r_n = 0$$
+`r_{t-1} = Z_t' F_t^{-1} v_t + L_t' r_t, \quad r_n = 0`$
 
 ### 3.3 Information Filter and Smoother
 
 For certain problems, particularly with diffuse priors, the information filter (working with precision matrices) can be more numerically stable:
 
-`a_t = P_t P_t^{-`{format: latexmath}} a_t = P_t \beta_t$$
+`a_t = P_t P_t^{-1} a_t = P_t \beta_t1$
 
-Where `\beta_t = P_t^{-`{format: latexmath}} a_t$ is the information vector and `P_t^{-`{format: latexmath}}$ is the information matrix.
+Where `\beta_t = P_t^{-1} a_t`$ is the information vector and `P_t^{-1}`$ is the information matrix.
 
 ## 4. Structural Time Series Models via State Space Representation
 
@@ -129,51 +129,50 @@ Structural time series models decompose a time series into components like trend
 ### 4.1 Local Level Model
 
 The simplest structural time series model is the local level model:
-
-$$y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)$$
-`\mu_{t+`{format: latexmath}} = \mu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)$$
+`y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)`$
+`\mu_{t+1} = \mu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)`$
 
 This can be written in state space form as:
-- State: $\alpha_t = \mu_t$
-- Transition matrix: `T_t = `{format: latexmath}$
-- Measurement matrix: `Z_t = `{format: latexmath}$
-- State disturbance: $\eta_t \sim N(0, \sigma_{\eta}^2)$
-- Observation disturbance: $\varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)$
+- State: `\alpha_t = \mu_t`$
+- Transition matrix: `T_t = 1`$
+- Measurement matrix: `Z_t = 1`$
+- State disturbance: `\eta_t \sim N(0, \sigma_{\eta}^2)`$
+- Observation disturbance: `\varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)`$
 
 ### 4.2 Local Linear Trend Model
 
 Adding a slope component yields the local linear trend model:
 
-$$y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)$$
-`\mu_{t+`{format: latexmath}} = \mu_t + \nu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)$$
-`\nu_{t+`{format: latexmath}} = \nu_t + \zeta_t, \quad \zeta_t \sim N(0, \sigma_{\zeta}^2)$$
+`y_t = \mu_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)`$
+`\mu_{t+1} = \mu_t + \nu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)`$
+`\nu_{t+1} = \nu_t + \zeta_t, \quad \zeta_t \sim N(0, \sigma_{\zeta}^2)`$
 
 The state space representation is:
-- State: $\alpha_t = (\mu_t, \nu_t)'$
-- Transition matrix: `T_t = \begin{pmatrix} 1 & 1 \\ 0 & `{format: latexmath} \end{pmatrix}$
-- Measurement matrix: `Z_t = (`{format: latexmath}, 0)$
-- State disturbances: $(\eta_t, \zeta_t)' \sim N(0, \text{diag}(\sigma_{\eta}^2, \sigma_{\zeta}^2))$
-- Observation disturbance: $\varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)$
+- State: `\alpha_t = (\mu_t, \nu_t)'`$
+- Transition matrix: `T_t = \begin{pmatrix} 1 & 1 \\ 0 & 1\end{pmatrix}`$
+- Measurement matrix: `Z_t = (1, 0)`$
+- State disturbances: `(\eta_t, \zeta_t)' \sim N(0, \text{diag}(\sigma_{\eta}^2, \sigma_{\zeta}^2))`$
+- Observation disturbance: `\varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)`$
 
 ### 4.3 Basic Structural Model (BSM)
 
 Adding a seasonal component gives the basic structural model:
 
-$$y_t = \mu_t + \gamma_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)$$
-`\mu_{t+`{format: latexmath}} = \mu_t + \nu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)$$
-`\nu_{t+`{format: latexmath}} = \nu_t + \zeta_t, \quad \zeta_t \sim N(0, \sigma_{\zeta}^2)$$
-`\gamma_{t+`{format: latexmath}} = -\sum_{j=0}^{s-2} \gamma_{t-j} + \omega_t, \quad \omega_t \sim N(0, \sigma_{\omega}^2)$$
+`y_t = \mu_t + \gamma_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \sigma_{\varepsilon}^2)`$
+`\mu_{t+1} = \mu_t + \nu_t + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)`$
+`\nu_{t+1} = \nu_t + \zeta_t, \quad \zeta_t \sim N(0, \sigma_{\zeta}^2)`$
+`\gamma_{t+1} = -\sum_{j=0}^{s-2} \gamma_{t-j} + \omega_t, \quad \omega_t \sim N(0, \sigma_{\omega}^2)`$
 
-Where $s$ is the seasonal period. The state space form is:
-- State: `\alpha_t = (\mu_t, \nu_t, \gamma_t, \gamma_{t-`{format: latexmath}}, ..., \gamma_{t-s+2})'$
+where `s`$ is the seasonal period. The state space form is:
+- State: `\alpha_t = (\mu_t, \nu_t, \gamma_t, \gamma_{t-1}, ..., \gamma_{t-s+2})'`$
 - Transition matrix includes the seasonality constraint
-- Measurement matrix: `Z_t = (1, 0, `{format: latexmath}, 0, ..., 0)$
+- Measurement matrix: `Z_t = (1, 0, 1, 0, ..., 0)`$
 
 ### 4.4 ARIMA Models as State Space Models
 
 Any ARIMA(p,d,q) model can be written in state space form. For example, an ARIMA(1,1,1) model:
 
-`(1-L)(1-\phi L)y_t = (`{format: latexmath}+\theta L)\varepsilon_t$$
+`(1-L)(1-\phi L)y_t = (1+\theta L)\varepsilon_t`$
 
 can be written in state space form with appropriate choices of state variables.
 
@@ -185,12 +184,12 @@ To apply the Kalman filter, we need estimates of the system matrices and noise c
 
 The log-likelihood for a state space model is:
 
-`\log L(y|θ) = -\frac{nT}{2} \log(2\pi) - \frac{1}{2} \sum_{t=1}^{n} \log |F_t| - \frac{1}{2} \sum_{t=1}^{n} v_t' F_t^{-`{format: latexmath}} v_t$$
+`\log L(y|θ) = -\frac{nT}{2} \log(2\pi) - \frac{1}{2} \sum_{t=1}^{n} \log |F_t| - \frac{1}{2} \sum_{t=1}^{n} v_t' F_t^{-1} v_t`$
 
 Where:
-- $θ$ represents the parameters
-- $v_t$ is the prediction error (innovation)
-- $F_t$ is the innovation covariance
+- `θ`$ represents the parameters
+- `v_t`$ is the prediction error (innovation)
+- `F_t`$ is the innovation covariance
 
 ### 5.2 Expectation-Maximization (EM) Algorithm
 
@@ -201,7 +200,7 @@ An alternative to direct maximum likelihood is the EM algorithm:
 
 ### 5.3 Diffuse Initialization
 
-For non-stationary components, we often use diffuse initialization where certain elements of `P_`{format: latexmath}$ are set to very large values or handled specially with exact diffuse initialization.
+For non-stationary components, we often use diffuse initialization where certain elements of `P_`1`$ are set to very large values or handled specially with exact diffuse initialization.
 
 ## 6. Application in Econometrics: Dynamic Factor Models
 
@@ -211,15 +210,15 @@ Dynamic factor models (DFMs) are widely used in econometrics to extract common f
 
 A dynamic factor model represents a vector of observed time series as driven by a small number of common factors plus idiosyncratic components:
 
-$$y_t = \Lambda f_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \Psi)$$
-`f_{t+`{format: latexmath}} = \Phi f_t + \eta_t, \quad \eta_t \sim N(0, Q)$$
+`y_t = \Lambda f_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, \Psi)`$
+`f_{t+1} = \Phi f_t + \eta_t, \quad \eta_t \sim N(0, Q)`$
 
 Where:
-- $y_t$ is an `N \times `{format: latexmath}$ vector of observed time series
-- $f_t$ is a `k \times `{format: latexmath}$ vector of common factors ($k \ll N$)
-- $\Lambda$ is an $N \times k$ matrix of factor loadings
-- $\Phi$ is a $k \times k$ matrix of autoregressive coefficients
-- $\Psi$ is typically a diagonal matrix (idiosyncratic errors are uncorrelated)
+- `y_t`$ is an `N \times 1`$ vector of observed time series
+- `f_t`$ is a `k \times 1`$ vector of common factors (`k \ll N`$)
+- `\Lambda`$ is an `N \times k`$ matrix of factor loadings
+- `\Phi`$ is a `k \times k`$ matrix of autoregressive coefficients
+- `\Psi`$ is typically a diagonal matrix (idiosyncratic errors are uncorrelated)
 
 ### 6.2 Estimation with Kalman Filter
 
@@ -232,7 +231,7 @@ The model can be estimated using:
 2. **One-step approach**:
    - Use the EM algorithm with Kalman smoother
    - E-step: Compute smoothed factors
-   - M-step: Update $\Lambda$, $\Phi$, $Q$, and $\Psi$
+   - M-step: Update `\Lambda$, $\Phi$, $Q$, and $\Psi`$
 
 ### 6.3 Application to Macroeconomic Forecasting
 
@@ -248,23 +247,23 @@ Stochastic volatility models capture time-varying volatility in financial return
 
 ### 7.1 The Basic Stochastic Volatility Model
 
-`y_t = \exp(h_t/2) \varepsilon_t, \quad \varepsilon_t \sim N(0, `{format: latexmath})$$
-`h_{t+`{format: latexmath}} = \mu + \phi(h_t - \mu) + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)$$
+`y_t = \exp(h_t/2) \varepsilon_t, \quad \varepsilon_t \sim N(0,1)`$
+`h_{t+1} = \mu + \phi(h_t - \mu) + \eta_t, \quad \eta_t \sim N(0, \sigma_{\eta}^2)`$
 
 Where:
-- $y_t$ is the asset return at time $t$
-- $h_t$ is the log-volatility
-- $\mu$ is the mean log-volatility
-- $\phi$ is the persistence parameter
-- $\sigma_{\eta}^2$ is the volatility of volatility
+- `y_t`$ is the asset return at time `t`$
+- `h_t`$ is the log-volatility
+- `\mu`$ is the mean log-volatility
+- `\phi`$ is the persistence parameter
+- `\sigma_{\eta}^2`$ is the volatility of volatility
 
 ### 7.2 State Space Representation and Estimation
 
 The model is non-linear, but can be linearized:
 
-$$\log(y_t^2) = h_t + \log(\varepsilon_t^2)$$
+`\log(y_t^2) = h_t + \log(\varepsilon_t^2)`$
 
-The distribution of $\log(\varepsilon_t^2)$ is non-Gaussian but can be approximated by a mixture of normals, enabling the use of Kalman filter for estimation.
+The distribution of `\log(\varepsilon_t^2)`$ is non-Gaussian but can be approximated by a mixture of normals, enabling the use of Kalman filter for estimation.
 
 ### 7.3 Extensions and Applications
 
@@ -286,7 +285,7 @@ Applications include:
 
 Implementations must consider:
 - Square-root filters to maintain positive definiteness of covariance matrices
-- Joseph form of the covariance update: `P_t = (I - K_t Z_t) P_{t|t-`{format: latexmath}} (I - K_t Z_t)' + K_t H_t K_t'$
+- Joseph form of the covariance update: `P_t = (I - K_t Z_t) P_{t|t-1} (I - K_t Z_t)' + K_t H_t K_t'`$
 - Singular value decomposition for rank-deficient problems
 
 ### 8.2 Efficient Implementation
