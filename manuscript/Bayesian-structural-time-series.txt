@@ -127,10 +127,10 @@ For regression effects with time-varying coefficients:
 
 For automatic variable selection in regression components:
 
-`\beta_j \sim \gamma_j N(0, \tau^2_j) + (1-\gamma_j)\vardelta_0`$
+`\beta_j \sim \gamma_j N(0, \tau^2_j) + (1-\gamma_j)\delta_0`$
 `\gamma_j \sim \text{Bernoulli}(\pi_j)`$
 
-Where `\vardelta_0`$ is a point mass at zero and `\gamma_j`$ indicates inclusion of variable `j`$.
+Where `\delta_0`$ is a point mass at zero and `\gamma_j`$ indicates inclusion of variable `j`$.
 
 ## 6. Posterior Computation
 
