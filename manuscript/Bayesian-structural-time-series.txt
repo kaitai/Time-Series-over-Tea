@@ -61,9 +61,9 @@ A Bayesian state space model extends the classical state space framework by trea
 
 The Bayesian perspective leads to these key conditional distributions:
 
-1. **Filtering Distribution**: `p(\alpha_t|y_{1:t}, θ)`$
-2. **Prediction Distribution**: `p(\alpha_{t+h}|y_{1:t}, θ)`$
-3. **Smoothing Distribution**: `p(\alpha_t|y_{1:T}, θ)`$
+1. **Filtering Distribution**: `p(\alpha_t|y_{1:t}, \theta)`$
+2. **Prediction Distribution**: `p(\alpha_{t+h}|y_{1:t}, \theta)`$
+3. **Smoothing Distribution**: `p(\alpha_t|y_{1:T}, \theta)`$
 4. **Parameter Posterior**: `p(\theta|y_{1:T})`$
 
 For linear Gaussian models, the Kalman filter and smoother provide analytical solutions for the first three distributions given fixed parameters. The parameter posterior typically requires simulation methods.
