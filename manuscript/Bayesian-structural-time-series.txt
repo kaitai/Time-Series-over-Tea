@@ -97,25 +97,25 @@ Stochastic cycle components with period and dampening parameters:
 
 `\begin{pmatrix} \phi_t \\ \phi^*_t \end{pmatrix} = \rho \begin{pmatrix} \cos \lambda & \sin \lambda \\ -\sin \lambda & \cos \lambda \end{pmatrix} \begin{pmatrix} \phi_{t-1} \\ \phi^*_{t-1} \end{pmatrix} + \begin{pmatrix} \kappa_t \\ \kappa^*_t \end{pmatrix}`$
 
-`\kappa_t, κ^*_t \sim N(0, σ^2_κ)$$
-$$σ^2_κ \sim \text{Inverse-Gamma}(a_κ, b_κ)$$
-$$ρ \sim \text{Beta}(a_ρ, b_ρ)$$
-$$λ \sim \text{prior reflecting periodicity beliefs}$$
+`\kappa_t, \kappa^*_t \sim N(0, σ^2_\kappa)`$
+`\sigma^2_\kappa \sim \text{Inverse-Gamma}(a_\kappa, b_\kappa)`$
+`\rho \sim \text{Beta}(a_\rho, b_\rho)`$
+`\lambda \sim \text{prior reflecting periodicity beliefs}`$
 
 ### 4.4 Regression Components
 
 For regression effects with time-varying coefficients:
 
-$$β_{t+1} = β_t + ξ_t, \quad ξ_t \sim N(0, Σ_β)$$
-$$Σ_β \sim \text{Inverse-Wishart}(ν_β, S_β)$$
+`\beta_{t+1} = \beta_t + \xi_t, \quad \xi_t \sim N(0, \Sigma_\beta)`$
+`\Sigma_\beta \sim \text{Inverse-Wishart}(\nu_\beta, S_\beta)`$
 
 ## 5. Prior Specification
 
 ### 5.1 Common Prior Choices
 
 1. **Variance Parameters**: Inverse-Gamma priors
-   - $\text{IG}(a, b)$ with mean $\frac{b}{a-1}$ for $a > 1$
-   - Small values of $a$ and $b$ (e.g., 0.01) for weakly informative priors
+   - `\text{IG}(a, b)`$ with mean `\frac{b}{a-1}`$ for `a > 1`$
+   - Small values of `a`$ and `b`$ (e.g., 0.01) for weakly informative priors
 
 2. **Autoregressive Parameters**: Beta priors transformed to (-1,1)
    - Encourages stationarity
@@ -127,10 +127,10 @@ $$Σ_β \sim \text{Inverse-Wishart}(ν_β, S_β)$$
 
 For automatic variable selection in regression components:
 
-$$β_j \sim γ_j N(0, τ^2_j) + (1-γ_j)δ_0$$
-$$γ_j \sim \text{Bernoulli}(π_j)$$
+`\beta_j \sim \gamma_j N(0, \tau^2_j) + (1-\gamma_j)\vardelta_0`$
+`\gamma_j \sim \text{Bernoulli}(\pi_j)`$
 
-Where $δ_0$ is a point mass at zero and $γ_j$ indicates inclusion of variable $j$.
+Where `\vardelta_0`$ is a point mass at zero and `\gamma_j`$ indicates inclusion of variable `j`$.
 
 ## 6. Posterior Computation
 
@@ -138,8 +138,8 @@ Where $δ_0$ is a point mass at zero and $γ_j$ indicates inclusion of variable 
 
 The standard approach uses Gibbs sampling to alternate between:
 
-1. **Sample States**: Draw from $p(α_{1:T}|y_{1:T}, θ)$ using Kalman simulation smoother
-2. **Sample Parameters**: Draw from $p(θ|y_{1:T}, α_{1:T})$ which often decomposes into:
+1. **Sample States**: Draw from `p(\alpha_{1:T}|y_{1:T}, θ)`$ using Kalman simulation smoother
+2. **Sample Parameters**: Draw from `p(\theta|y_{1:T}, \alpha_{1:T})`$ which often decomposes into:
    - Variance parameters: Inverse-Gamma full conditionals
    - Regression coefficients: Normal full conditionals
    - Inclusion indicators: Bernoulli full conditionals
@@ -148,12 +148,12 @@ The standard approach uses Gibbs sampling to alternate between:
 
 A key algorithm for sampling states:
 
-1. Run Kalman filter forward to get $a_t$ and $P_t$
-2. Sample $α_T$ from $N(a_T, P_T)$
+1. Run Kalman filter forward to get `a_t`$ and `P_t`$
+2. Sample `\alpha_T`$ from `N(a_T, P_T)`$
 3. Recursively sample backwards:
-   $$α_t|α_{t+1}, y_{1:T} \sim N(h_t, H_t)$$
-   $$h_t = a_t + P_t T_t'(T_t P_t T_t' + R_t Q_t R_t')^{-1}(α_{t+1} - T_t a_t)$$
-   $$H_t = P_t - P_t T_t'(T_t P_t T_t' + R_t Q_t R_t')^{-1}T_t P_t$$
+   `\alpha_t|\alpha_{t+1}, y_{1:T} \sim N(h_t, H_t)`$
+   `h_t = a_t + P_t T_t'(T_t P_t T_t' + R_t Q_t R_t')^{-1}(\alpha_{t+1} - T_t a_t)`$
+   `H_t = P_t - P_t T_t'(T_t P_t T_t' + R_t Q_t R_t')^{-1}T_t P_t`$
 
 ### 6.3 Markov Chain Monte Carlo (MCMC) Diagnostics
 
@@ -205,20 +205,20 @@ One powerful application of BSTS is measuring causal effects in time series:
 
 ### 8.2 Model Structure
 
-$$y_t = Z_t α_t + β'x_t + ε_t$$
+`y_t = Z_t \alpha_t + \beta'x_t + \varepsion_t`$
 
 Where:
-- $y_t$ is the target series
-- $Z_t α_t$ represents structural components (trend, seasonality)
-- $x_t$ are control series (unaffected by intervention)
-- $β$ are coefficients (with spike-and-slab priors for variable selection)
+- `y_t`$ is the target series
+- `Z_t \alpha_t`$ represents structural components (trend, seasonality)
+- `x_t`$ are control series (unaffected by intervention)
+- `\beta`$ are coefficients (with spike-and-slab priors for variable selection)
 
 ### 8.3 Inference
 
 1. Estimate model on pre-treatment data
 2. Predict counterfactual for post-treatment period
-3. Calculate point-wise causal effects: $y_t - \hat{y}_t$
-4. Aggregate effects over time: $\sum_{t>T_0} (y_t - \hat{y}_t)$
+3. Calculate point-wise causal effects: `y_t - \hat{y}_t`$
+4. Aggregate effects over time: `\sum_{t>T_0} (y_t - \hat{y}_t)`$
 5. Report posterior distributions of effects
 
 ## 9. Application: Financial Time Series
