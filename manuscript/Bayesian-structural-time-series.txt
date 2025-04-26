@@ -205,7 +205,7 @@ One powerful application of BSTS is measuring causal effects in time series:
 
 ### 8.2 Model Structure
 
-`y_t = Z_t \alpha_t + \beta'x_t + \varepsion_t`$
+`y_t = Z_t \alpha_t + \beta'x_t + \varepsilon_t`$
 
 Where:
 - `y_t`$ is the target series
