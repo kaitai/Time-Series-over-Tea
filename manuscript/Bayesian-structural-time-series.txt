@@ -10,17 +10,17 @@ Bayesian structural time series (BSTS) models combine the interpretability of st
 
 Bayes' theorem provides the mathematical foundation for updating beliefs in light of new evidence:
 
-$$P(θ|y) = \frac{P(y|θ)P(θ)}{P(y)}$$
+`P(θ|y) = \frac{P(y|θ)P(θ)}{P(y)}`$
 
 Where:
-- $P(θ|y)$ is the posterior distribution (updated belief about parameters given the data)
-- $P(y|θ)$ is the likelihood (probability of observing the data given the parameters)
-- $P(θ)$ is the prior distribution (initial belief about parameters)
-- $P(y)$ is the marginal likelihood or evidence (total probability of observing the data)
+- `P(θ|y)`$ is the posterior distribution (updated belief about parameters given the data)
+- `P(y|θ)`$ is the likelihood (probability of observing the data given the parameters)
+- `P(θ)`$ is the prior distribution (initial belief about parameters)
+- `P(y)`$ is the marginal likelihood or evidence (total probability of observing the data)
 
 The posterior is often written proportionally as:
 
-$$P(θ|y) \propto P(y|θ)P(θ)$$
+`P(θ|y) \propto P(y|θ)P(θ)`$
 
 ### 2.2 Bayesian Inference Principles
 
@@ -40,7 +40,7 @@ Key concepts in Bayesian inference include:
    - Can be asymmetric if the posterior is skewed
 
 4. **Prediction**: Based on integrating over parameter uncertainty
-   - Posterior predictive distribution: $p(y_{new}|y) = \int p(y_{new}|θ)p(θ|y)dθ$
+   - Posterior predictive distribution: `p(y_{new}|y) = \int p(y_{new}|θ)p(θ|y)dθ`$
 
 ## 3. Bayesian State Space Models
 
@@ -49,22 +49,22 @@ Key concepts in Bayesian inference include:
 A Bayesian state space model extends the classical state space framework by treating all parameters as random variables:
 
 1. **State Equation**:
-   $$α_{t+1} = T_t α_t + R_t η_t, \quad η_t \sim N(0, Q_t)$$
+   `\alpha_{t+1} = T_t \alpha_t + R_t \eta_t, \quad \eta_t \sim N(0, Q_t)`$
 
 2. **Observation Equation**:
-   $$y_t = Z_t α_t + ε_t, \quad ε_t \sim N(0, H_t)$$
+   `y_t = Z_t \alpha_t + \varepsilon_t, \quad \varepsilon_t \sim N(0, H_t)`$
 
 3. **Parameter Distributions**:
-   $$T_t, Z_t, R_t, Q_t, H_t \sim \text{Prior distributions}$$
+   `T_t, Z_t, R_t, Q_t, H_t \sim \text{Prior distributions}`$
 
 ### 3.2 Bayesian Filtering and Smoothing
 
 The Bayesian perspective leads to these key conditional distributions:
 
-1. **Filtering Distribution**: $p(α_t|y_{1:t}, θ)$
-2. **Prediction Distribution**: $p(α_{t+h}|y_{1:t}, θ)$
-3. **Smoothing Distribution**: $p(α_t|y_{1:T}, θ)$
-4. **Parameter Posterior**: $p(θ|y_{1:T})$
+1. **Filtering Distribution**: `p(\alpha_t|y_{1:t}, θ)`$
+2. **Prediction Distribution**: `p(\alpha_{t+h}|y_{1:t}, θ)`$
+3. **Smoothing Distribution**: `p(\alpha_t|y_{1:T}, θ)`$
+4. **Parameter Posterior**: `p(\theta|y_{1:T})`$
 
 For linear Gaussian models, the Kalman filter and smoother provide analytical solutions for the first three distributions given fixed parameters. The parameter posterior typically requires simulation methods.
 
@@ -75,14 +75,14 @@ For linear Gaussian models, the Kalman filter and smoother provide analytical so
 In the Bayesian framework, trend components have prior distributions on their variance parameters:
 
 1. **Local Level Model**:
-   $$μ_{t+1} = μ_t + η_t, \quad η_t \sim N(0, σ^2_η)$$
-   $$σ^2_η \sim \text{Inverse-Gamma}(a_η, b_η)$$
+   `\mu_{t+1} = \mu_t + \eta_t, \quad \eta_t \sim N(0, \sigma^2_\eta)`$
+   `\sigma^2_\eta \sim \text{Inverse-Gamma}(a_\eta, b_\eta)`$
 
 2. **Local Linear Trend**:
-   $$μ_{t+1} = μ_t + ν_t + η_t, \quad η_t \sim N(0, σ^2_η)$$
-   $$ν_{t+1} = ν_t + ζ_t, \quad ζ_t \sim N(0, σ^2_ζ)$$
-   $$σ^2_η \sim \text{Inverse-Gamma}(a_η, b_η)$$
-   $$σ^2_ζ \sim \text{Inverse-Gamma}(a_ζ, b_ζ)$$
+   `\mu_{t+1} = \mu_t + \nu_t + \eta_t, \quad \eta_t \sim N(0, \sigma^2_\eta)`$
+   `\nu_{t+1} = \nu_t + \zeta_t, \quad \zeta_t \sim N(0, \sigma^2_\zeta)`$
+   `\sigma^2_\eta \sim \text{Inverse-Gamma}(a_\eta, b_\eta)`$
+   `\sigma^2_\zeta \sim \text{Inverse-Gamma}(a_\zeta, b_\zeta)`$
 
 ### 4.2 Seasonal Components
 
@@ -266,6 +266,10 @@ Bayesian structural time series models offer:
 - Tools for causal inference and decision-making under uncertainty
 
 As computational methods continue to advance, BSTS models are becoming increasingly practical for complex applications requiring both interpretability and uncertainty quantification.
+
+Authorship: Anthropic Claude 3.7 Sonnet with modifications by me as I proofread.
+
+Tea pairing: Forever Spring Black Oolong
 
 ## References
 
