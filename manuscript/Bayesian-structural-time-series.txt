@@ -88,16 +88,16 @@ In the Bayesian framework, trend components have prior distributions on their va
 
 The Bayesian treatment of seasonal components:
 
-$$γ_{t+1} = -\sum_{j=0}^{s-2} γ_{t-j} + ω_t, \quad ω_t \sim N(0, σ^2_ω)$$
-$$σ^2_ω \sim \text{Inverse-Gamma}(a_ω, b_ω)$$
+`γ_{t+1} = -\sum_{j=0}^{s-2} γ_{t-j} + \omega_t, \quad \omega_t \sim N(0, \sigma^2_\omega)`$
+`\sigma^2_\omega \sim \text{Inverse-Gamma}(a_\omega, b_\omega)`$
 
 ### 4.3 Cycle Components
 
 Stochastic cycle components with period and dampening parameters:
 
-$$\begin{pmatrix} ψ_t \\ ψ^*_t \end{pmatrix} = ρ \begin{pmatrix} \cos λ & \sin λ \\ -\sin λ & \cos λ \end{pmatrix} \begin{pmatrix} ψ_{t-1} \\ ψ^*_{t-1} \end{pmatrix} + \begin{pmatrix} κ_t \\ κ^*_t \end{pmatrix}$$
+`\begin{pmatrix} \phi_t \\ \phi^*_t \end{pmatrix} = \rho \begin{pmatrix} \cos \lambda & \sin \lambda \\ -\sin \lambda & \cos \lambda \end{pmatrix} \begin{pmatrix} \phi_{t-1} \\ \phi^*_{t-1} \end{pmatrix} + \begin{pmatrix} \kappa_t \\ \kappa^*_t \end{pmatrix}`$
 
-$$κ_t, κ^*_t \sim N(0, σ^2_κ)$$
+`\kappa_t, κ^*_t \sim N(0, σ^2_κ)$$
 $$σ^2_κ \sim \text{Inverse-Gamma}(a_κ, b_κ)$$
 $$ρ \sim \text{Beta}(a_ρ, b_ρ)$$
 $$λ \sim \text{prior reflecting periodicity beliefs}$$
