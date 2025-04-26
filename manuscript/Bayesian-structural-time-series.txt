@@ -10,17 +10,17 @@ Bayesian structural time series (BSTS) models combine the interpretability of st
 
 Bayes' theorem provides the mathematical foundation for updating beliefs in light of new evidence:
 
-`P(θ|y) = \frac{P(y|θ)P(θ)}{P(y)}`$
+`P(θ|y) = \frac{P(y|\theta)P(\theta)}{P(y)}`$
 
 Where:
-- `P(θ|y)`$ is the posterior distribution (updated belief about parameters given the data)
-- `P(y|θ)`$ is the likelihood (probability of observing the data given the parameters)
-- `P(θ)`$ is the prior distribution (initial belief about parameters)
+- `P(\theta|y)`$ is the posterior distribution (updated belief about parameters given the data)
+- `P(y|\theta)`$ is the likelihood (probability of observing the data given the parameters)
+- `P(\theta)`$ is the prior distribution (initial belief about parameters)
 - `P(y)`$ is the marginal likelihood or evidence (total probability of observing the data)
 
 The posterior is often written proportionally as:
 
-`P(θ|y) \propto P(y|θ)P(θ)`$
+`P(\theta|y) \propto P(y|\theta)P(\theta)`$
 
 ### 2.2 Bayesian Inference Principles
 
